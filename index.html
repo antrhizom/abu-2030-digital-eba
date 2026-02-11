@@ -60,6 +60,11 @@
     .callout { background:#fffbeb; border-left:3px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:.85rem; }
     .callout-green { background:#f0fdf4; border-left-color:#22c55e; }
 
+    .info-btn { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:#3b82f6; color:#fff; font-size:.65rem; font-weight:700; cursor:pointer; margin-left:4px; position:relative; vertical-align:middle; line-height:1; border:none; }
+    .info-btn:hover .info-tooltip, .info-btn:focus .info-tooltip { display:block; }
+    .info-tooltip { display:none; position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#1e293b; color:#fff; padding:8px 12px; border-radius:6px; font-size:.76rem; font-weight:400; white-space:normal; width:260px; text-align:left; z-index:10; line-height:1.4; box-shadow:0 4px 12px rgba(0,0,0,.15); }
+    .info-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#1e293b; }
+
     /* THEME CARDS */
     .theme-card { background:var(--card); border-radius:var(--radius); box-shadow:0 1px 4px rgba(0,0,0,.06); margin-bottom:18px; overflow:hidden; }
     .theme-card.hidden { display:none; }
@@ -213,7 +218,7 @@
         </thead>
         <tbody>
           <tr><td style="text-align:left;">Ethik</td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
-          <tr><td style="text-align:left;">Identität &amp; Sozialisation</td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td></td><td><strong>3×</strong></td></tr>
+          <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Identität &amp; Sozialisation <button class="info-btn" tabindex="0">i<span class="info-tooltip">Lernende bewegen sich in virtuellen Räumen, die ihre Identität und Sozialisation mitprägen. Digitale Medien beeinflussen Rollenbilder, Selbstbild und Kommunikation – daher ist dieser Bereich digital relevant.</span></button></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td></td><td><strong>3×</strong></td></tr>
           <tr><td style="text-align:left;">Kultur</td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
           <tr><td style="text-align:left;">Ökologie</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td>2×</td></tr>
           <tr><td style="text-align:left;">Politik</td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td>2×</td></tr>
@@ -224,7 +229,9 @@
       </table>
 
       <div class="callout-green callout" style="margin-top:10px;">
-        <strong>Digital relevant</strong> (blau hervorgehoben): Technologische und digitale Transformation – wird in T1 (Berufseinstieg, digitaler Arbeitsplatz) und T4 (Medien und digitale Welt, KI, Recherche) behandelt.
+        <strong>Digital relevant</strong> (blau hervorgehoben):<br>
+          <strong>Techn. &amp; dig. Transformation</strong> – wird in T1 (digitaler Arbeitsplatz) und T4 (KI, Recherche, digitale Werkzeuge) behandelt.<br>
+          <strong>Identität &amp; Sozialisation</strong> – Lernende bewegen sich in virtuellen Räumen, die Identität, Rollenbilder und Sozialisation mitprägen (vgl. Einleitung SLP).
       </div>
     </div>
 
