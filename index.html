@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitale Kompetenzen – SLP ABU EBA</title>
+  <style>
+    :root {
+      --clr-bg: #f5f6fa;
+      --clr-card: #ffffff;
+      --clr-accent: #2d5fcf;
+      --clr-accent-light: #e8eefb;
+      --clr-text: #23272f;
+      --clr-muted: #6b7280;
+      --clr-border: #e2e5ea;
+      --clr-t1: #2563eb; --clr-t1-bg: #eff4ff;
+      --clr-t2: #16a34a; --clr-t2-bg: #effcf3;
+      --clr-t3: #dc2626; --clr-t3-bg: #fef2f2;
+      --clr-t4: #9333ea; --clr-t4-bg: #faf5ff;
+      --clr-t5: #ea580c; --clr-t5-bg: #fff7ed;
+      --clr-t6: #0891b2; --clr-t6-bg: #ecfeff;
+      --clr-t7: #4f46e5; --clr-t7-bg: #eef2ff;
+      --clr-t8: #be185d; --clr-t8-bg: #fdf2f8;
+      --radius: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      line-height: 1.6;
+    }
+
+    /* ---- PRINT ---- */
+    @media print {
+      body { background: #fff; font-size: 10pt; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .theme-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+      .comp-row { break-inside: avoid; }
+      header { padding: 10px 0; }
+      header h1 { font-size: 16pt; }
+      .container { max-width: 100%; padding: 0 10px; }
+      .filter-bar { display: none; }
+      .selected-filters-print { display: block !important; margin-bottom: 12px; font-size: 9pt; color: #555; }
+    }
+
+    .print-only { display: none; }
+
+    /* ---- HEADER ---- */
+    header {
+      background: linear-gradient(135deg, #1e3a6e 0%, #2d5fcf 100%);
+      color: #fff;
+      padding: 32px 0 28px;
+      text-align: center;
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.3px; }
+    header p { font-size: 0.95rem; opacity: 0.85; margin-top: 6px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* ---- FILTER BAR ---- */
+    .filter-bar {
+      background: var(--clr-card);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      margin: 24px auto;
+      padding: 20px 24px;
+    }
+    .filter-bar h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--clr-muted); margin-bottom: 12px; }
+
+    .filter-section { margin-bottom: 16px; }
+    .filter-section:last-child { margin-bottom: 0; }
+    .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--clr-muted); margin-bottom: 6px; }
+
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--clr-border);
+      background: #fff;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .chip:hover { border-color: var(--clr-accent); background: var(--clr-accent-light); }
+    .chip.active { background: var(--clr-accent); color: #fff; border-color: var(--clr-accent); }
+
+    .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--clr-accent); color: #fff; }
+    .btn-primary:hover { background: #1d4db8; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--clr-border); color: var(--clr-muted); }
+    .btn-outline:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+    .btn-print { background: #111827; color: #fff; }
+    .btn-print:hover { background: #000; }
+
+    /* ---- STATS ---- */
+    .stats-bar {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin: 0 auto 20px;
+      font-size: 0.8rem; color: var(--clr-muted);
+    }
+    .stat-badge {
+      background: var(--clr-card);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--clr-border);
+    }
+
+    /* ---- THEME CARDS ---- */
+    .theme-card {
+      background: var(--clr-card);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: opacity 0.2s;
+    }
+    .theme-card.hidden { display: none; }
+
+    .theme-header {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .theme-num {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #fff;
+      flex-shrink: 0;
+    }
+    .theme-header h2 { font-size: 1.05rem; font-weight: 700; flex: 1; }
+    .theme-header .year-badge {
+      font-size: 0.72rem; padding: 2px 10px; border-radius: 10px;
+      background: var(--clr-accent-light); color: var(--clr-accent); font-weight: 600;
+    }
+    .theme-header .toggle-icon { font-size: 1.2rem; color: var(--clr-muted); transition: transform 0.2s; }
+    .theme-card.open .toggle-icon { transform: rotate(180deg); }
+
+    .theme-body { padding: 0 24px 20px; display: none; }
+    .theme-card.open .theme-body { display: block; }
+
+    .leitidee {
+      background: #f9fafb;
+      border-left: 3px solid var(--clr-accent);
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      color: var(--clr-muted);
+      font-style: italic;
+    }
+
+    /* ---- SECTIONS INSIDE THEME ---- */
+    .section-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--clr-muted);
+      margin: 18px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .tag-gesellschaft { background: #fef3c7; color: #92400e; }
+    .tag-sprache { background: #dbeafe; color: #1e40af; }
+    .tag-kompetenz { background: #ede9fe; color: #5b21b6; }
+    .tag-r { font-size: 0.65rem; font-weight: 700; opacity: 0.7; }
+
+    /* ---- COMPETENCE ROWS ---- */
+    .comp-row {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border-left: 3px solid transparent;
+    }
+    .comp-row h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+    .comp-row p { font-size: 0.84rem; color: var(--clr-muted); margin-bottom: 6px; }
+    .comp-detail { font-size: 0.82rem; margin-bottom: 4px; }
+    .comp-detail strong { color: var(--clr-text); }
+
+    .digital-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 8px;
+    }
+    .digital-box h5 { font-size: 0.78rem; font-weight: 700; color: #166534; margin-bottom: 4px; }
+    .digital-box ul { list-style: none; padding: 0; }
+    .digital-box li { font-size: 0.8rem; color: #15803d; padding: 2px 0; padding-left: 16px; position: relative; }
+    .digital-box li::before { content: '→'; position: absolute; left: 0; }
+
+    /* ---- LEGEND ---- */
+    .legend {
+      background: var(--clr-card);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 20px 24px;
+      margin: 24px auto;
+    }
+    .legend h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--clr-muted); margin-bottom: 10px; }
+    .legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      font-size: 0.78rem;
+      color: var(--clr-muted);
+    }
+
+    .selected-filters-print { display: none; }
+  </style>
+</head>
+<body>
+
+<header class="no-print">
+  <div class="container">
+    <h1>Digitale Kompetenzen im SLP ABU EBA</h1>
+    <p>2-jahrige Grundbildung &middot; Schlüsselkompetenzen &middot; Sprachmodi &middot; Gesellschaftsinhalte</p>
+  </div>
+</header>
+
+<!-- Print header -->
+<div class="print-only" style="text-align:center; margin-bottom:10px;">
+  <h1 style="font-size:16pt;">Digitale Kompetenzen im SLP ABU EBA</h1>
+  <p style="font-size:9pt; color:#666;">2-jahrige Grundbildung – Übersicht Schlüsselkompetenzen, Sprachmodi, Gesellschaftsinhalte &amp; digitale Werkzeuge</p>
+</div>
+
+<div class="container">
+
+  <!-- FILTER -->
+  <div class="filter-bar no-print">
+    <h3>Filter &amp; Auswahl</h3>
+
+    <div class="filter-section">
+      <div class="filter-label">Themen</div>
+      <div class="filter-chips" id="themeFilters">
+        <span class="chip active" data-filter="all">Alle</span>
+        <span class="chip" data-filter="1">T1 Berufseinstieg</span>
+        <span class="chip" data-filter="2">T2 Konsum</span>
+        <span class="chip" data-filter="3">T3 Sicherheit</span>
+        <span class="chip" data-filter="4">T4 Medien &amp; Digital</span>
+        <span class="chip" data-filter="5">T5 Politik</span>
+        <span class="chip" data-filter="6">T6 Recht &amp; Ethik</span>
+        <span class="chip" data-filter="7">T7 Arbeit &amp; Zukunft</span>
+        <span class="chip" data-filter="8">T8 Kultur &amp; Kunst</span>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Fokus</div>
+      <div class="filter-chips" id="focusFilters">
+        <span class="chip active" data-focus="all">Alle Bereiche</span>
+        <span class="chip" data-focus="gesellschaft">Gesellschaftsinhalte</span>
+        <span class="chip" data-focus="sprache">Sprachmodi</span>
+        <span class="chip" data-focus="kompetenz">Schlüsselkompetenzen</span>
+        <span class="chip" data-focus="digital">Digitale Tools</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="expandAll()">Alle aufklappen</button>
+      <button class="btn btn-outline" onclick="collapseAll()">Alle zuklappen</button>
+      <button class="btn btn-print" onclick="handlePrint()">Als PDF drucken</button>
+    </div>
+  </div>
+
+  <div class="selected-filters-print" id="printFilterInfo"></div>
+
+  <!-- STATS -->
+  <div class="stats-bar no-print" id="statsBar">
+    <span class="stat-badge">8 Themen</span>
+    <span class="stat-badge">12 Schlüsselkompetenzen</span>
+    <span class="stat-badge">9 Sprachmodi</span>
+    <span class="stat-badge">8 Gesellschaftsbereiche</span>
+  </div>
+
+  <!-- THEMES -->
+  <div id="themesContainer"></div>
+
+  <!-- LEGEND -->
+  <div class="legend no-print">
+    <h3>Legende</h3>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="legend-dot" style="background:#fef3c7; border:1px solid #fcd34d;"></span> Gesellschaftsinhalte</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#dbeafe; border:1px solid #93c5fd;"></span> Sprachmodi</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#ede9fe; border:1px solid #c4b5fd;"></span> Schlüsselkompetenzen</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#f0fdf4; border:1px solid #bbf7d0;"></span> Digitale Werkzeuge &amp; Tools</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#fff;border:1px solid #aaa;"></span><span style="font-size:0.75rem;">R1 = Erstbehandlung, R2 = Vertiefung, R3 = Festigung</span></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="no-print">
+  <p>SLP ABU EBA – Digitale Kompetenzübersicht &middot; Erstellt auf Basis des Schullehrplans ABU EBA 2-jahrige Grundbildung (Bildungsrat, 05.01.2026)</p>
+</footer>
+
+<script>
+const DATA = [
+  {
+    id: 1, year: 1,
+    title: "Ins Berufsleben einsteigen",
+    leitidee: "Übergang in die neue Lebensphase: neue Rollen in Betrieb, Schule und Privatleben, Orientierung in fremder Umgebung.",
+    gesellschaft: [
+      { name: "Recht", detail: "Lehrvertrag, Umgangsregeln, Meldewege, Konfliktmanagement", r: "R1" },
+      { name: "Techn. & dig. Transformation", detail: "Ordnerstrukturen, Kommunikationsmittel, Kalender-/Notizfunktionen", r: "R1" },
+      { name: "Identität & Sozialisation", detail: "Lernstrategien, Belastungszeichen, Gesundheitsregeln", r: "R1" }
+    ],
+    sprachmodi: [
+      { name: "Rezeption schriftlich/bildlich", detail: "Texte/Anleitungen zu digitalen Werkzeugen verstehen, Markierhilfe, Lesestrategien", r: "R1" },
+      { name: "Rezeption mündlich", detail: "Aussagen aus Gesprächen/Audioquellen verstehen und nachfragen", r: "R1" },
+      { name: "Interaktion & Kollaboration digital", detail: "Videokonferenz, KI-basierte Tools, digitale Projekte im Team", r: "R1" }
+    ],
+    kompetenzen: [
+      { name: "Ziele setzen und anpassen", r: "R1" },
+      { name: "Verständnis fördern", r: "R1" },
+      { name: "Anpassung", r: "R1" }
+    ],
+    lernziele: [
+      {
+        titel: "1.1.1 Orientierung in der Arbeitswelt mit Lehrvertrag",
+        inhalt: "Lehrvertrag verstehen, bei Konflikten Kontaktstellen nutzen",
+        digital: ["Videokonferenz-Tools (z.B. Teams, Zoom)", "KI-basierte Chatbots für Fragen zum Lehrvertrag", "Digitale Austauschplattformen (z.B. Moodle, Teams-Kanäle)"]
+      },
+      {
+        titel: "1.1.2 Digitaler Lern-/Arbeitsplatz einrichten",
+        inhalt: "Ordnerstrukturen nutzen, Kommunikation und Kalender einrichten",
+        digital: ["Cloud-Speicher (OneDrive, Google Drive)", "Kalender-Apps (Outlook, Google Calendar)", "Notiz-Apps (OneNote, Notion, Apple Notes)", "Ordnerstrukturen auf Smartphone/PC"]
+      },
+      {
+        titel: "1.2.1 Regeln/Zuständigkeiten in Schule & Betrieb",
+        inhalt: "Hausordnungen, Kommunikationsregeln, betriebliche Vorgaben verstehen",
+        digital: ["Digitale Schulplattformen (Moodle, SharePoint)", "Chat-Regeln in Messenger-Apps"]
+      },
+      {
+        titel: "1.2.2 Entlastungsstrategien und Selbstsorge",
+        inhalt: "Belastungszeichen erkennen, Gesundheits-/Verhaltensregeln",
+        digital: ["Gesundheits-Apps (z.B. Headspace, Calm)", "Selbsttest-Tools online", "Lernjournal digital führen"]
+      }
+    ]
+  },
+  {
+    id: 2, year: 1,
+    title: "Bewusst konsumieren und handeln",
+    leitidee: "Zusammenhang von Konsum, Finanzen, Wirtschaft und ökologischen Folgen erkennen und verantwortungsvoll handeln.",
+    gesellschaft: [
+      { name: "Wirtschaft", detail: "Budget, Schuldenfallen, Betrieb-Kunden-Kommunikation, professioneller Auftritt", r: "R1" },
+      { name: "Ökologie", detail: "Produktbewertung (Herkunft, Energie, Material, Entsorgung), Massenkonsum-Folgen, CO₂-Fussabdruck", r: "R1" }
+    ],
+    sprachmodi: [
+      { name: "Rezeption audiovisuell", detail: "Videos/Clips zu Budget, Konsum und Umweltfolgen verstehen", r: "R1" },
+      { name: "Produktion mündlich", detail: "Meinung äussern, argumentieren zu Konsum und Nachhaltigkeit", r: "R1" }
+    ],
+    kompetenzen: [
+      { name: "Quellen unterscheiden", r: "R1" },
+      { name: "Innovation und Problemlösung", r: "R1" },
+      { name: "Nachhaltigkeit", r: "R1" }
+    ],
+    lernziele: [
+      {
+        titel: "2.1.1 Budget erstellen und Schuldenrisiken erkennen",
+        inhalt: "Konsumentscheidungen reflektieren, Schuldenrisiken identifizieren",
+        digital: ["Budget-Apps (z.B. Mint, YNAB, BudgetCH)", "Excel/Google Sheets für Budget-Tabelle", "Erklärvideos zu Finanzkompetenz (YouTube)"]
+      },
+      {
+        titel: "2.1.2 Strategien nachhaltiger Konsum",
+        inhalt: "Produktbewertung, Herkunft, Energieverbrauch, Entsorgung",
+        digital: ["Label-Check-Apps (z.B. Codecheck, Yuka)", "Ökologischer Fussabdruck-Rechner online", "Vergleichsportale für nachhaltigen Konsum"]
+      },
+      {
+        titel: "2.2.1 Betriebliche Grundlagen verstehen",
+        inhalt: "Produktion, Werbung, Kundenbeziehung im Betrieb beschreiben",
+        digital: ["Präsentationstools (PowerPoint, Canva, Google Slides)", "Branchenvergleich über Webseiten"]
+      },
+      {
+        titel: "2.2.2 Folgen des Massenkonsums aufzeigen",
+        inhalt: "Rohstoffverbrauch, Energie, Transport, Abfall, CO₂",
+        digital: ["Dokumentarfilme/Clips (Streaming, YouTube)", "Infografik-Tools (Canva, Piktochart)", "Interaktive Karten zu globalen Lieferketten"]
+      }
+    ]
+  },
+  {
+    id: 3, year: 1,
+    title: "Sicherheit und Gesundheit",
+    leitidee: "Risiken in Alltag, Beruf und digitaler Welt erkennen, kommunizieren und Schutzmassnahmen planen.",
+    gesellschaft: [
+      { name: "Identität & Sozialisation", detail: "Gesundheit, Risikoverhalten, Wohlbefinden, Normen, Rollenbilder", r: "R2" },
+      { name: "Recht", detail: "Sicherheitsregeln, Arbeitsschutzvorgaben, gesetzliche Grundlagen bei Unfällen/Schäden", r: "R2" }
+    ],
+    sprachmodi: [
+      { name: "Produktion schriftlich/bildlich", detail: "Übersichten, Protokolle, Prompts, Bilder erzeugen zu Sicherheitsthemen", r: "R1" },
+      { name: "Interaktion & Kollaboration mündlich", detail: "Austausch über Risiken, Rückmeldungen geben, argumentieren", r: "R1" }
+    ],
+    kompetenzen: [
+      { name: "Teamarbeit", r: "R1" },
+      { name: "Werthaltungen reflektieren", r: "R1" },
+      { name: "Mehrdeutigkeit", r: "R1" }
+    ],
+    lernziele: [
+      {
+        titel: "3.1.1 Risiken im Alltag und Betrieb aufzeigen",
+        inhalt: "Sicherheitsregeln, Gefahrenhinweise, Arbeitsschutz",
+        digital: ["SUVA-App und -Website", "Interaktive Gefahren-Checklisten online", "Diskussionsforen in Lernplattformen (Moodle)"]
+      },
+      {
+        titel: "3.1.2 Absicherung prüfen (Versicherungen)",
+        inhalt: "Gesetzliche Grundlagen, Zuständigkeiten bei Unfällen/Schäden",
+        digital: ["Versicherungsvergleich-Portale (Comparis, Bonus.ch)", "KI-Chat für Fachbegriff-Erklärungen", "Prompt-Formulierung für KI-gestützte Recherche"]
+      },
+      {
+        titel: "3.2.1 Gesellschaftliche Normen reflektieren",
+        inhalt: "Erwartungen zu Körper, Geschlecht, Identität erkennen",
+        digital: ["Podcast-Plattformen (Spotify, Apple Podcasts)", "Kurzumfrage-Tools (Mentimeter, Wooclap)"]
+      },
+      {
+        titel: "3.2.2 Gesundheitsfördernder Lebensstil",
+        inhalt: "Eigene Bedürfnisse wahrnehmen, Belastungszeichen erkennen",
+        digital: ["Gesundheits-Tracking-Apps", "Digitales Tagebuch/Lernjournal", "KI-Bildgenerator für Visualisierungen (z.B. Canva AI)"]
+      }
+    ]
+  },
+  {
+    id: 4, year: 1,
+    title: "Medien und digitale Welt",
+    leitidee: "Digitale Werkzeuge und KI gezielt einsetzen, Inhalte kritisch beurteilen, kulturelle Prägung erkennen.",
+    gesellschaft: [
+      { name: "Techn. & dig. Transformation", detail: "Digitale Werkzeuge, KI-Funktionen, Recherche, Quellenarchive", r: "R2" },
+      { name: "Kultur", detail: "Digitale Kultur, Social-Media-Kultur, kulturelle Prägung von KI-Inhalten", r: "R1" }
+    ],
+    sprachmodi: [
+      { name: "Interaktion & Kollaboration digital", detail: "Hybrides/asynchrones Arbeiten, Lernjournale, Screencast-Feedback, KI-Iteration", r: "R2" },
+      { name: "Interaktion & Kollaboration schriftlich", detail: "Rückmeldungen (E-Mail, Chat), Quellen sammeln und ordnen", r: "R1" },
+      { name: "Interaktion & Kollaboration mündlich", detail: "Fallbeispiele besprechen, Gruppenentscheidungen, Rollen übernehmen", r: "R2" }
+    ],
+    kompetenzen: [
+      { name: "Quellen unterscheiden", r: "R2" },
+      { name: "Anpassung", r: "R2" },
+      { name: "Partizipation", r: "R1" }
+    ],
+    lernziele: [
+      {
+        titel: "4.1.1 Digitale Werkzeuge situationsgerecht nutzen",
+        inhalt: "Smartphone-Werkzeugkasten, Kommunikationstools, Office-Programme",
+        digital: ["Microsoft 365 (Word, Excel, PowerPoint, Teams)", "Google Workspace (Docs, Sheets, Slides)", "Kommunikations-Apps (Teams, Slack, WhatsApp Business)", "Smartphone als Arbeitsgerät konfigurieren"]
+      },
+      {
+        titel: "4.1.2 KI anwenden und Produkte überarbeiten",
+        inhalt: "KI-Funktionen für Text, Bild; Input vs. Output vergleichen, iterativ entwickeln",
+        digital: ["ChatGPT / Copilot / Claude für Textarbeit", "KI-Bildgeneratoren (DALL-E, Midjourney, Canva AI)", "Screencast-Tools (Loom, OBS) für Feedback", "Digitale Lernjournale (OneNote, Notion)"]
+      },
+      {
+        titel: "4.2.1 Verlässliche Informationen finden und prüfen",
+        inhalt: "Rechercheleitfaden, Recherchefunktionen inkl. KI, Quellendokumentation",
+        digital: ["Suchmaschinen-Operatoren (Google Advanced Search)", "Faktencheck-Websites (Correctiv, Snopes, SRF)", "KI-gestützte Recherche (Perplexity, ChatGPT)", "Quellenmanagement-Tools (Zotero, einfache Tabelle)"]
+      },
+      {
+        titel: "4.2.2 Social Media & künstliche Inhalte erkennen",
+        inhalt: "Kulturelle Prägung, Deepfakes, manipulierte Inhalte",
+        digital: ["Deepfake-Erkennungstools", "Reverse Image Search (Google, TinEye)", "Social-Media-Analysetools", "Medienkompass / SRG-Medienkompetenz"]
+      }
+    ]
+  },
+  {
+    id: 5, year: 2,
+    title: "Meinung bilden und mitgestalten",
+    leitidee: "Politische Entscheidungen verstehen, eigene Meinung bilden, zur aktiven Teilhabe motivieren.",
+    gesellschaft: [
+      { name: "Politik", detail: "Abstimmungsunterlagen, politisches System, Demokratie, Gemeindeorganisation", r: "R1" },
+      { name: "Ökologie", detail: "Klimawandel-Modelle, ökologischer Fussabdruck", r: "R2" }
+    ],
+    sprachmodi: [
+      { name: "Rezeption mündlich", detail: "Politische Aussagen verstehen, Diskussionen folgen, Werte erkennen", r: "R2" },
+      { name: "Produktion multimedial", detail: "Social-Media-Content, Videos, Podcasts, digitale Poster mit KI-Unterstützung", r: "R1" }
+    ],
+    kompetenzen: [
+      { name: "Werthaltungen reflektieren", r: "R2" },
+      { name: "Standpunkte begründen", r: "R1" },
+      { name: "Nachhaltigkeit", r: "R2" }
+    ],
+    lernziele: [
+      {
+        titel: "5.1.1 Politische Beiträge verstehen und einordnen",
+        inhalt: "Informationsquellen analysieren, Folgen politischer Entscheidungen",
+        digital: ["Newsportale & Podcasts (SRF, NZZ, 20 Minuten)", "Abstimmungsplattformen (Easyvote, Smartvote)", "KI-Assistent für Argumentaufbau"]
+      },
+      {
+        titel: "5.1.2 Eigene Standpunkte entwickeln und vertreten",
+        inhalt: "Meinungsbildung, argumentatives Gespräch",
+        digital: ["KI-Chat für Gegenargument-Training", "Social-Media-Content-Tools (Canva, CapCut)", "Podcast-Aufnahme (Anchor, GarageBand)"]
+      },
+      {
+        titel: "5.2.1 Politisches System der Schweiz darstellen",
+        inhalt: "(Halb)direkte Demokratie, Föderalismus verstehen",
+        digital: ["ch.ch – offizielle Schweizer Infoplattform", "Interaktive Grafiken zum politischen System", "Erklärvideos (SRF mySchool, Easyvote)"]
+      },
+      {
+        titel: "5.2.2 Mitwirkungsprojekt gestalten",
+        inhalt: "Kommunale Kampagne für Jugend-Anliegen produzieren",
+        digital: ["Video-Editoren (CapCut, iMovie, Clipchamp)", "Podcast-Tools (Anchor, Spotify for Podcasters)", "Poster-/Flyer-Design (Canva)", "KI-Bild-/Videogeneratoren"]
+      }
+    ]
+  },
+  {
+    id: 6, year: 2,
+    title: "Verträge verstehen – fair handeln",
+    leitidee: "Verträge lesen und verstehen, Rechte/Pflichten ableiten, fair und respektvoll kommunizieren.",
+    gesellschaft: [
+      { name: "Recht", detail: "Vertragsrecht (Kauf, Miete, Abo), AGB, Kündigungsfristen, Vertragsfallen", r: "R3" },
+      { name: "Ethik", detail: "Ethische vs. rechtliche Regelungen, Perspektivenübernahme, moralische Konflikte", r: "R1" }
+    ],
+    sprachmodi: [
+      { name: "Produktion mündlich", detail: "Argumente strukturieren, Redemittel nutzen, Argumentationsaufbau", r: "R2" },
+      { name: "Produktion schriftlich/bildlich", detail: "KI-gestützte Texte/Bilder, Info-Posts, Beschwerdeschreiben, Umfragen", r: "R2" }
+    ],
+    kompetenzen: [
+      { name: "Teamarbeit", r: "R2" },
+      { name: "Standpunkte begründen", r: "R2" },
+      { name: "Verständnis fördern", r: "R2" }
+    ],
+    lernziele: [
+      {
+        titel: "6.1.1 Alltagsverträge beurteilen",
+        inhalt: "Kauf-, Miet-, Abo-Verträge analysieren, Rechte/Pflichten ableiten",
+        digital: ["KI-Chat für Fachbegriff-Erklärung (ChatGPT, Copilot)", "Digitale Vertragsvorlagen analysieren", "Canva/Instagram für Info-Posts erstellen", "Promptvorlagen für KI-gestützte Textüberarbeitung"]
+      },
+      {
+        titel: "6.1.2 Rechtliche Abklärung und Unterstützung finden",
+        inhalt: "Beratungsstellen kennen, Beschwerdeschreiben formulieren",
+        digital: ["Beratungsstellen-Websites (Konsumentenschutz, Pro Juventute)", "Vorlagen für formelle Briefe/E-Mails", "KI-Unterstützung für formelle Korrespondenz"]
+      },
+      {
+        titel: "6.2.1 Ethische von rechtlichen Regelungen unterscheiden",
+        inhalt: "Ethische Grundsätze, Perspektivenübernahme",
+        digital: ["Dilemma-Szenarien digital aufbereitet", "Abstimmungstools in Klasse (Mentimeter, Kahoot)"]
+      },
+      {
+        titel: "6.2.2 Moralische Konflikte lösen",
+        inhalt: "Moralische Prinzipien anwenden, in Gruppe diskutieren",
+        digital: ["Digitale Diskussionsforen", "Padlet/Miro für Gruppenarbeit", "Rollenspiel-Szenarien digital vorbereiten"]
+      }
+    ]
+  },
+  {
+    id: 7, year: 2,
+    title: "Arbeit und Zukunft",
+    leitidee: "Berufliche Laufbahn planen, Pflichten gegenüber Staat verstehen, selbstständig Verantwortung übernehmen.",
+    gesellschaft: [
+      { name: "Identität & Sozialisation", detail: "Persönlichkeitsentwicklung, Weiterbildung, Zukunftschancen", r: "R3" },
+      { name: "Wirtschaft", detail: "Lohnabrechnungen, Steuern, Sozialversicherungen, wirtschaftliche Situationen", r: "R2" },
+      { name: "Politik", detail: "Politische Pflichten/Rechte, Behördenkontakt", r: "R2" }
+    ],
+    sprachmodi: [
+      { name: "Rezeption schriftlich/bildlich", detail: "Absicht von Texten erkennen, Grafiken/Umfragen interpretieren", r: "R2" },
+      { name: "Interaktion & Kollaboration mündlich", detail: "Zielgerichtete Gespräche, Lösungen entwickeln, Positionen vertreten", r: "R3" },
+      { name: "Interaktion & Kollaboration schriftlich", detail: "Asynchrone Kommunikation, Behördenkontakt schriftlich, Rückmeldungen", r: "R2" }
+    ],
+    kompetenzen: [
+      { name: "Ziele setzen und anpassen", r: "R2" },
+      { name: "Innovation und Problemlösung", r: "R2" },
+      { name: "Lebensphasen planen", r: "R1" }
+    ],
+    lernziele: [
+      {
+        titel: "7.1.1 Fähigkeiten, Interessen und Ziele reflektieren",
+        inhalt: "Persönlichkeitsentwicklung, Weiterbildungsmöglichkeiten erkunden",
+        digital: ["Berufsberatungs-Plattformen (berufsberatung.ch)", "Persönlichkeitstests online (z.B. 16Personalities)", "KI-gestützte Laufbahnberatung", "Weiterbildungsportale (ausbildung-weiterbildung.ch)"]
+      },
+      {
+        titel: "7.1.2 Berufliche Laufbahn planen und Bewerbung",
+        inhalt: "Bewerbungsdossier, lebenslanges Lernen",
+        digital: ["Lebenslauf-Vorlagen (Canva, Word, Europass)", "Bewerbungsbrief-Unterstützung per KI", "LinkedIn / XING Profilerstellung", "Online-Bewerbungsportale (jobs.ch, Indeed)"]
+      },
+      {
+        titel: "7.2.1 Pflichten gegenüber Staat/Gesellschaft",
+        inhalt: "Steuern, politische Pflichten und Rechte",
+        digital: ["Steuererklärung online (eTax, EasyTax)", "Behörden-Websites (ch.ch, Gemeindeportale)", "KI-Assistent für Fachbegriffe (Steuern, AHV, BVG)"]
+      },
+      {
+        titel: "7.2.2 Unterlagen für Behörden zusammenstellen",
+        inhalt: "Amtliche Dokumente/Formulare ausfüllen und einreichen",
+        digital: ["Digitale Formulare (eUmzug, Steuererklärung)", "Dokumenten-Scanner-Apps", "E-Mail-Vorlagen für Behördenkontakt", "Cloud-Ablage für Dokumentenmanagement"]
+      }
+    ]
+  },
+  {
+    id: 8, year: 2,
+    title: "Kultur und Kunst",
+    leitidee: "Kultur als Ausdrucksmittel erleben, gesellschaftliche Themen kreativ sichtbar machen, Vielfalt fördern.",
+    gesellschaft: [
+      { name: "Kultur", detail: "Kulturelle Ausdrucksformen, Kunst, Ausdrucksfreiheit, Kultur als Mittel", r: "R2" },
+      { name: "Ethik", detail: "Perspektivenübernahme, Machtverhältnisse, kulturelle Realitäten", r: "R2" }
+    ],
+    sprachmodi: [
+      { name: "Rezeption audiovisuell", detail: "Bildsprache/Tonalität deuten, audiovisuelle Medienformate unterscheiden", r: "R2" },
+      { name: "Rezeption mündlich", detail: "Podcasts, Rollenspiele, publikumsgerechte Präsentationen", r: "R3" },
+      { name: "Produktion multimedial", detail: "Audiovisuelle Programme recherchieren, Storys erstellen, kreative Werke", r: "R2" }
+    ],
+    kompetenzen: [
+      { name: "Lebensphasen planen", r: "R2" },
+      { name: "Mehrdeutigkeit", r: "R2" },
+      { name: "Partizipation", r: "R2" }
+    ],
+    lernziele: [
+      {
+        titel: "8.1.1 Kulturelle Ausdrucksformen beschreiben",
+        inhalt: "Sprache, Bilder, Werke aus dem Umfeld, Ausdrucksfreiheit",
+        digital: ["Virtuelle Museumsbesuche (Google Arts & Culture)", "Streaming-Dienste für Kunst/Dokumentationen", "Bild-/Videoanalyse-Tools"]
+      },
+      {
+        titel: "8.1.2 Kulturelle Phänomene reflektieren",
+        inhalt: "Zugehörigkeit, Machtverhältnisse, ethische Grundsätze",
+        digital: ["Podcast-Plattformen (Spotify, Apple Podcasts)", "Rollenspiel-Szenarien digital aufbereiten", "Mentimeter/Wooclap für Meinungsbilder"]
+      },
+      {
+        titel: "8.2.1 Kreative Ausdrucksformen nutzen",
+        inhalt: "Auf gesellschaftliche Entwicklungen reagieren, Denkanstösse geben",
+        digital: ["Video-Editoren (CapCut, iMovie, Clipchamp)", "KI-Bild-/Videogeneratoren (DALL-E, Runway)", "Digital Storytelling Tools (Storybird, Adobe Spark)", "Street-Art-Simulation (digitale Graffiti-Tools)"]
+      },
+      {
+        titel: "8.2.2 Verschiedene Lesarten eines Kunstwerks diskutieren",
+        inhalt: "Begründete Diskussion, Perspektivenvielfalt",
+        digital: ["Digitale Pinnwände (Padlet, Miro, Jamboard)", "KI für Interpretationshilfen", "Audiovisuelle Storytelling-Programme"]
+      }
+    ]
+  }
+];
+
+const themeColors = ['','#2563eb','#16a34a','#dc2626','#9333ea','#ea580c','#0891b2','#4f46e5','#be185d'];
+const themeColorsBg = ['','#eff4ff','#effcf3','#fef2f2','#faf5ff','#fff7ed','#ecfeff','#eef2ff','#fdf2f8'];
+
+// State
+let activeThemes = new Set(['all']);
+let activeFocus = 'all';
+
+function renderThemes() {
+  const container = document.getElementById('themesContainer');
+  container.innerHTML = '';
+
+  DATA.forEach(theme => {
+    const visible = activeThemes.has('all') || activeThemes.has(String(theme.id));
+    const card = document.createElement('div');
+    card.className = `theme-card${visible ? ' open' : ' hidden'}`;
+    card.dataset.theme = theme.id;
+
+    const showG = activeFocus === 'all' || activeFocus === 'gesellschaft';
+    const showS = activeFocus === 'all' || activeFocus === 'sprache';
+    const showK = activeFocus === 'all' || activeFocus === 'kompetenz';
+    const showD = activeFocus === 'all' || activeFocus === 'digital';
+
+    card.innerHTML = `
+      <div class="theme-header" onclick="toggleCard(this)">
+        <div class="theme-num" style="background:${themeColors[theme.id]}">T${theme.id}</div>
+        <h2>${theme.title}</h2>
+        <span class="year-badge">${theme.year}. Lehrjahr</span>
+        <span class="toggle-icon">&#9660;</span>
+      </div>
+      <div class="theme-body">
+        <div class="leitidee">${theme.leitidee}</div>
+
+        ${showG ? `
+        <div class="section-title">Gesellschaftsinhalte</div>
+        <div class="tag-list">
+          ${theme.gesellschaft.map(g => `<span class="tag tag-gesellschaft">${g.name} <span class="tag-r">${g.r}</span></span>`).join('')}
+        </div>
+        <div style="margin-top:6px;">
+          ${theme.gesellschaft.map(g => `<div class="comp-detail"><strong>${g.name}:</strong> ${g.detail}</div>`).join('')}
+        </div>
+        ` : ''}
+
+        ${showS ? `
+        <div class="section-title">Sprachmodi</div>
+        <div class="tag-list">
+          ${theme.sprachmodi.map(s => `<span class="tag tag-sprache">${s.name} <span class="tag-r">${s.r}</span></span>`).join('')}
+        </div>
+        <div style="margin-top:6px;">
+          ${theme.sprachmodi.map(s => `<div class="comp-detail"><strong>${s.name}:</strong> ${s.detail}</div>`).join('')}
+        </div>
+        ` : ''}
+
+        ${showK ? `
+        <div class="section-title">Schlüsselkompetenzen</div>
+        <div class="tag-list">
+          ${theme.kompetenzen.map(k => `<span class="tag tag-kompetenz">${k.name} <span class="tag-r">${k.r}</span></span>`).join('')}
+        </div>
+        ` : ''}
+
+        <div class="section-title">Lernziele &amp; Digitale Umsetzung</div>
+        ${theme.lernziele.map(lz => `
+          <div class="comp-row" style="border-left-color:${themeColors[theme.id]};">
+            <h4>${lz.titel}</h4>
+            <p>${lz.inhalt}</p>
+            ${showD ? `
+            <div class="digital-box">
+              <h5>Digitale Werkzeuge &amp; Tools</h5>
+              <ul>
+                ${lz.digital.map(d => `<li>${d}</li>`).join('')}
+              </ul>
+            </div>
+            ` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Filter logic
+document.getElementById('themeFilters').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  const val = chip.dataset.filter;
+
+  if (val === 'all') {
+    activeThemes = new Set(['all']);
+  } else {
+    activeThemes.delete('all');
+    if (activeThemes.has(val)) {
+      activeThemes.delete(val);
+      if (activeThemes.size === 0) activeThemes.add('all');
+    } else {
+      activeThemes.add(val);
+    }
+  }
+  updateChips('themeFilters', activeThemes, 'filter');
+  renderThemes();
+});
+
+document.getElementById('focusFilters').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  activeFocus = chip.dataset.focus;
+  updateChips('focusFilters', new Set([activeFocus]), 'focus');
+  renderThemes();
+});
+
+function updateChips(containerId, activeSet, attr) {
+  document.querySelectorAll(`#${containerId} .chip`).forEach(c => {
+    const val = c.dataset[attr];
+    c.classList.toggle('active', activeSet.has(val));
+  });
+}
+
+function toggleCard(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function expandAll() {
+  document.querySelectorAll('.theme-card:not(.hidden)').forEach(c => c.classList.add('open'));
+}
+
+function collapseAll() {
+  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('open'));
+}
+
+function handlePrint() {
+  // Expand all visible cards for print
+  document.querySelectorAll('.theme-card:not(.hidden)').forEach(c => c.classList.add('open'));
+
+  // Build print filter info
+  let info = 'Ausgewählt: ';
+  if (activeThemes.has('all')) {
+    info += 'Alle Themen';
+  } else {
+    const names = [];
+    activeThemes.forEach(id => {
+      const t = DATA.find(d => d.id === parseInt(id));
+      if (t) names.push(`T${t.id} ${t.title}`);
+    });
+    info += names.join(', ');
+  }
+  info += ` | Fokus: ${activeFocus === 'all' ? 'Alle Bereiche' : activeFocus}`;
+  document.getElementById('printFilterInfo').textContent = info;
+
+  setTimeout(() => window.print(), 200);
+}
+
+// Initial render
+renderThemes();
+</script>
+
+</body>
+</html>
