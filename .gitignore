@@ -3,3 +3,4 @@ extracted_text_SLP.txt
 *.docx
 *.png
 .claude/
+.vercel

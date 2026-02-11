@@ -6,808 +6,604 @@
   <title>Digitale Kompetenzen – SLP ABU EBA</title>
   <style>
     :root {
-      --clr-bg: #f5f6fa;
-      --clr-card: #ffffff;
-      --clr-accent: #2d5fcf;
-      --clr-accent-light: #e8eefb;
-      --clr-text: #23272f;
-      --clr-muted: #6b7280;
-      --clr-border: #e2e5ea;
-      --clr-t1: #2563eb; --clr-t1-bg: #eff4ff;
-      --clr-t2: #16a34a; --clr-t2-bg: #effcf3;
-      --clr-t3: #dc2626; --clr-t3-bg: #fef2f2;
-      --clr-t4: #9333ea; --clr-t4-bg: #faf5ff;
-      --clr-t5: #ea580c; --clr-t5-bg: #fff7ed;
-      --clr-t6: #0891b2; --clr-t6-bg: #ecfeff;
-      --clr-t7: #4f46e5; --clr-t7-bg: #eef2ff;
-      --clr-t8: #be185d; --clr-t8-bg: #fdf2f8;
-      --radius: 10px;
+      --bg: #f5f6fa; --card: #fff; --accent: #2d5fcf; --accent-lt: #e8eefb;
+      --txt: #23272f; --muted: #6b7280; --border: #e2e5ea; --radius: 10px;
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--txt); line-height:1.6; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--clr-bg);
-      color: var(--clr-text);
-      line-height: 1.6;
-    }
-
-    /* ---- PRINT ---- */
     @media print {
-      body { background: #fff; font-size: 10pt; }
-      .no-print { display: none !important; }
-      .print-only { display: block !important; }
-      .theme-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
-      .comp-row { break-inside: avoid; }
-      header { padding: 10px 0; }
-      header h1 { font-size: 16pt; }
-      .container { max-width: 100%; padding: 0 10px; }
-      .filter-bar { display: none; }
-      .selected-filters-print { display: block !important; margin-bottom: 12px; font-size: 9pt; color: #555; }
+      body { background:#fff; font-size:9.5pt; }
+      .no-print { display:none!important; }
+      .theme-card { break-inside:avoid; box-shadow:none; border:1px solid #ccc; }
+      .lz-row { break-inside:avoid; }
+      header { padding:8px 0; }
+      .container { max-width:100%; padding:0 10px; }
+      .info-panel { break-inside:avoid; }
     }
 
-    .print-only { display: none; }
+    header { background:linear-gradient(135deg,#1e3a6e,#2d5fcf); color:#fff; padding:28px 0 24px; text-align:center; }
+    header h1 { font-size:1.5rem; font-weight:700; }
+    header p { font-size:0.9rem; opacity:.85; margin-top:4px; }
 
-    /* ---- HEADER ---- */
-    header {
-      background: linear-gradient(135deg, #1e3a6e 0%, #2d5fcf 100%);
-      color: #fff;
-      padding: 32px 0 28px;
-      text-align: center;
-    }
-    header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.3px; }
-    header p { font-size: 0.95rem; opacity: 0.85; margin-top: 6px; }
+    .container { max-width:1060px; margin:0 auto; padding:0 20px; }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    /* NAV TABS */
+    .nav-tabs { display:flex; gap:4px; margin:20px auto 0; background:var(--card); border-radius:var(--radius); padding:4px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+    .nav-tab { flex:1; text-align:center; padding:10px 8px; border-radius:8px; font-size:.85rem; font-weight:600; cursor:pointer; transition:all .15s; color:var(--muted); border:none; background:none; }
+    .nav-tab:hover { background:var(--accent-lt); color:var(--accent); }
+    .nav-tab.active { background:var(--accent); color:#fff; }
+    .view { display:none; }
+    .view.active { display:block; }
 
-    /* ---- FILTER BAR ---- */
-    .filter-bar {
-      background: var(--clr-card);
-      border-radius: var(--radius);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin: 24px auto;
-      padding: 20px 24px;
-    }
-    .filter-bar h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--clr-muted); margin-bottom: 12px; }
+    /* INFO PANELS */
+    .info-panel { background:var(--card); border-radius:var(--radius); box-shadow:0 1px 4px rgba(0,0,0,.06); padding:24px 28px; margin:20px 0; }
+    .info-panel h2 { font-size:1.1rem; font-weight:700; margin-bottom:14px; color:var(--accent); }
+    .info-panel h3 { font-size:.92rem; font-weight:700; margin:16px 0 8px; }
+    .info-panel p, .info-panel li { font-size:.88rem; color:#374151; }
+    .info-panel ul { padding-left:20px; margin:6px 0; }
+    .info-panel li { margin-bottom:4px; }
 
-    .filter-section { margin-bottom: 16px; }
-    .filter-section:last-child { margin-bottom: 0; }
-    .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--clr-muted); margin-bottom: 6px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:700px) { .grid-2 { grid-template-columns:1fr; } }
 
-    .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip {
-      display: inline-block;
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--clr-border);
-      background: #fff;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-    }
-    .chip:hover { border-color: var(--clr-accent); background: var(--clr-accent-light); }
-    .chip.active { background: var(--clr-accent); color: #fff; border-color: var(--clr-accent); }
+    .mini-table { width:100%; border-collapse:collapse; font-size:.8rem; margin:8px 0 4px; }
+    .mini-table th, .mini-table td { padding:5px 8px; border:1px solid var(--border); text-align:center; }
+    .mini-table th { background:#f1f5f9; font-weight:600; color:var(--muted); font-size:.72rem; text-transform:uppercase; }
+    .mini-table td { font-size:.78rem; }
+    .r-dot { display:inline-block; width:20px; height:20px; border-radius:4px; font-size:.68rem; font-weight:700; color:#fff; line-height:20px; text-align:center; }
+    .r1 { background:#3b82f6; }
+    .r2 { background:#f59e0b; }
+    .r3 { background:#ef4444; }
+    .digital-highlight { background:#dbeafe; color:#1e40af; font-weight:600; }
 
-    .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-    .btn {
-      padding: 8px 20px;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-primary { background: var(--clr-accent); color: #fff; }
-    .btn-primary:hover { background: #1d4db8; }
-    .btn-outline { background: transparent; border: 1.5px solid var(--clr-border); color: var(--clr-muted); }
-    .btn-outline:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
-    .btn-print { background: #111827; color: #fff; }
-    .btn-print:hover { background: #000; }
+    .callout { background:#fffbeb; border-left:3px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:.85rem; }
+    .callout-green { background:#f0fdf4; border-left-color:#22c55e; }
 
-    /* ---- STATS ---- */
-    .stats-bar {
-      display: flex; gap: 10px; flex-wrap: wrap;
-      margin: 0 auto 20px;
-      font-size: 0.8rem; color: var(--clr-muted);
-    }
-    .stat-badge {
-      background: var(--clr-card);
-      padding: 4px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--clr-border);
-    }
+    /* THEME CARDS */
+    .theme-card { background:var(--card); border-radius:var(--radius); box-shadow:0 1px 4px rgba(0,0,0,.06); margin-bottom:18px; overflow:hidden; }
+    .theme-card.hidden { display:none; }
+    .th-header { padding:14px 20px; display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; }
+    .th-num { width:34px; height:34px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.9rem; color:#fff; flex-shrink:0; }
+    .th-header h2 { font-size:.98rem; font-weight:700; flex:1; }
+    .yr { font-size:.7rem; padding:2px 10px; border-radius:10px; background:var(--accent-lt); color:var(--accent); font-weight:600; }
+    .arrow { font-size:1.1rem; color:var(--muted); transition:transform .2s; }
+    .theme-card.open .arrow { transform:rotate(180deg); }
+    .th-body { padding:0 20px 16px; display:none; }
+    .theme-card.open .th-body { display:block; }
 
-    /* ---- THEME CARDS ---- */
-    .theme-card {
-      background: var(--clr-card);
-      border-radius: var(--radius);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin-bottom: 24px;
-      overflow: hidden;
-      transition: opacity 0.2s;
-    }
-    .theme-card.hidden { display: none; }
+    .sec-title { font-size:.74rem; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin:14px 0 6px; padding-bottom:3px; border-bottom:1px solid var(--border); }
 
-    .theme-header {
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .theme-num {
-      width: 38px; height: 38px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1rem; color: #fff;
-      flex-shrink: 0;
-    }
-    .theme-header h2 { font-size: 1.05rem; font-weight: 700; flex: 1; }
-    .theme-header .year-badge {
-      font-size: 0.72rem; padding: 2px 10px; border-radius: 10px;
-      background: var(--clr-accent-light); color: var(--clr-accent); font-weight: 600;
-    }
-    .theme-header .toggle-icon { font-size: 1.2rem; color: var(--clr-muted); transition: transform 0.2s; }
-    .theme-card.open .toggle-icon { transform: rotate(180deg); }
+    .lz-row { background:#f9fafb; border-radius:8px; padding:12px 14px; margin-bottom:8px; border-left:3px solid transparent; }
+    .lz-row h4 { font-size:.86rem; font-weight:600; margin-bottom:4px; }
+    .lz-row .sprachmodus { font-size:.8rem; color:var(--muted); margin-bottom:4px; }
+    .lz-row .sprachmodus strong { color:#1e40af; }
+    .lz-row .gesellschaft { font-size:.8rem; color:var(--muted); margin-bottom:4px; }
+    .lz-row .gesellschaft strong { color:#92400e; }
 
-    .theme-body { padding: 0 24px 20px; display: none; }
-    .theme-card.open .theme-body { display: block; }
+    .digi-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; margin-top:6px; }
+    .digi-box h5 { font-size:.74rem; font-weight:700; color:#166534; margin-bottom:3px; }
+    .digi-box ul { list-style:none; padding:0; }
+    .digi-box li { font-size:.78rem; color:#15803d; padding:1px 0 1px 14px; position:relative; }
+    .digi-box li::before { content:'→'; position:absolute; left:0; }
 
-    .leitidee {
-      background: #f9fafb;
-      border-left: 3px solid var(--clr-accent);
-      padding: 12px 16px;
-      border-radius: 0 6px 6px 0;
-      margin-bottom: 18px;
-      font-size: 0.88rem;
-      color: var(--clr-muted);
-      font-style: italic;
-    }
+    .chip-row { display:flex; flex-wrap:wrap; gap:5px; margin:4px 0; }
+    .chip-sm { display:inline-block; padding:2px 10px; border-radius:12px; font-size:.72rem; font-weight:600; }
+    .chip-g { background:#fef3c7; color:#92400e; }
+    .chip-s { background:#dbeafe; color:#1e40af; }
+    .chip-k { background:#ede9fe; color:#5b21b6; }
 
-    /* ---- SECTIONS INSIDE THEME ---- */
-    .section-title {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--clr-muted);
-      margin: 18px 0 8px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--clr-border);
-    }
+    .filter-bar { background:var(--card); border-radius:var(--radius); box-shadow:0 1px 4px rgba(0,0,0,.06); margin:20px 0; padding:16px 20px; }
+    .filter-chips { display:flex; flex-wrap:wrap; gap:5px; }
+    .chip { display:inline-block; padding:5px 14px; border-radius:20px; border:1.5px solid var(--border); background:#fff; font-size:.8rem; cursor:pointer; transition:all .15s; user-select:none; }
+    .chip:hover { border-color:var(--accent); background:var(--accent-lt); }
+    .chip.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 500;
-    }
-    .tag-gesellschaft { background: #fef3c7; color: #92400e; }
-    .tag-sprache { background: #dbeafe; color: #1e40af; }
-    .tag-kompetenz { background: #ede9fe; color: #5b21b6; }
-    .tag-r { font-size: 0.65rem; font-weight: 700; opacity: 0.7; }
+    .btn-row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+    .btn { padding:7px 18px; border:none; border-radius:6px; font-size:.82rem; font-weight:600; cursor:pointer; }
+    .btn-p { background:var(--accent); color:#fff; } .btn-p:hover { background:#1d4db8; }
+    .btn-o { background:transparent; border:1.5px solid var(--border); color:var(--muted); } .btn-o:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-d { background:#111827; color:#fff; } .btn-d:hover { background:#000; }
 
-    /* ---- COMPETENCE ROWS ---- */
-    .comp-row {
-      background: #f9fafb;
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      border-left: 3px solid transparent;
-    }
-    .comp-row h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
-    .comp-row p { font-size: 0.84rem; color: var(--clr-muted); margin-bottom: 6px; }
-    .comp-detail { font-size: 0.82rem; margin-bottom: 4px; }
-    .comp-detail strong { color: var(--clr-text); }
-
-    .digital-box {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 6px;
-      padding: 10px 14px;
-      margin-top: 8px;
-    }
-    .digital-box h5 { font-size: 0.78rem; font-weight: 700; color: #166534; margin-bottom: 4px; }
-    .digital-box ul { list-style: none; padding: 0; }
-    .digital-box li { font-size: 0.8rem; color: #15803d; padding: 2px 0; padding-left: 16px; position: relative; }
-    .digital-box li::before { content: '→'; position: absolute; left: 0; }
-
-    /* ---- LEGEND ---- */
-    .legend {
-      background: var(--clr-card);
-      border-radius: var(--radius);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      padding: 20px 24px;
-      margin: 24px auto;
-    }
-    .legend h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--clr-muted); margin-bottom: 10px; }
-    .legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
-    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
-
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      font-size: 0.78rem;
-      color: var(--clr-muted);
-    }
-
-    .selected-filters-print { display: none; }
+    footer { text-align:center; padding:28px 0; font-size:.75rem; color:var(--muted); }
   </style>
 </head>
 <body>
 
-<header class="no-print">
+<header>
   <div class="container">
     <h1>Digitale Kompetenzen im SLP ABU EBA</h1>
-    <p>2-jahrige Grundbildung &middot; Schlüsselkompetenzen &middot; Sprachmodi &middot; Gesellschaftsinhalte</p>
+    <p>2-jährige Grundbildung &middot; Fokus auf digitale Aspekte</p>
   </div>
 </header>
 
-<!-- Print header -->
-<div class="print-only" style="text-align:center; margin-bottom:10px;">
-  <h1 style="font-size:16pt;">Digitale Kompetenzen im SLP ABU EBA</h1>
-  <p style="font-size:9pt; color:#666;">2-jahrige Grundbildung – Übersicht Schlüsselkompetenzen, Sprachmodi, Gesellschaftsinhalte &amp; digitale Werkzeuge</p>
-</div>
-
 <div class="container">
 
-  <!-- FILTER -->
-  <div class="filter-bar no-print">
-    <h3>Filter &amp; Auswahl</h3>
+  <!-- NAV -->
+  <div class="nav-tabs no-print">
+    <button class="nav-tab active" onclick="showView('info')">Grundlagen &amp; Zirkularität</button>
+    <button class="nav-tab" onclick="showView('themen')">Themen &amp; digitale Umsetzung</button>
+  </div>
 
-    <div class="filter-section">
-      <div class="filter-label">Themen</div>
+  <!-- ============================================ -->
+  <!-- VIEW 1: INFO -->
+  <!-- ============================================ -->
+  <div class="view active" id="view-info">
+
+    <div class="info-panel">
+      <h2>Grundlagen des SLP ABU EBA</h2>
+      <p>Der Schullehrplan ABU EBA richtet sich an EBA-Lernende der 2-jährigen Grundbildung. Er umfasst <strong>8 Themen à 22 Lektionen</strong>, verteilt auf zwei Lehrjahre. Die Kompetenzen werden <strong>zirkulär</strong> aufgebaut: Jede Kompetenz wird mindestens zweimal behandelt (R1 = Erstbehandlung, R2 = Vertiefung, R3 = Festigung).</p>
+
+      <div class="callout" style="margin-top:14px;">
+        <strong>Transversale Themen:</strong> Die Themen Digitalisierung, nachhaltige Entwicklung und Chancengerechtigkeit sowie Globalisierung, der demographische Wandel oder die Migration werden als Querschnittsthemen in allen 8 Themen mitgedacht und integriert.
+      </div>
+    </div>
+
+    <div class="grid-2">
+
+      <!-- SPRACHMODI -->
+      <div class="info-panel">
+        <h2>Sprachmodi – Zirkularität</h2>
+        <p>9 Sprachmodi werden über die 8 Themen zirkulär geübt. <strong>2 Sprachmodi werden dreimal</strong> behandelt, alle anderen <strong>zweimal</strong>.</p>
+
+        <table class="mini-table">
+          <thead>
+            <tr><th>Sprachmodus</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>T8</th><th>Anz.</th></tr>
+          </thead>
+          <tbody>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Rezeption mündlich</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td><strong>3×</strong></td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Rezeption audiovisuell</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Rezeption schriftlich/bildlich</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td>2×</td></tr>
+            <tr><td style="text-align:left;">Produktion mündlich</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td>2×</td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Produktion schriftlich/bildlich</td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td>2×</td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Produktion multimedial</td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
+            <tr><td style="text-align:left;">I&amp;K mündlich</td><td></td><td></td><td><span class="r-dot r1">1</span></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td></td><td><strong>3×</strong></td></tr>
+            <tr><td style="text-align:left;">I&amp;K schriftlich</td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td>2×</td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">I&amp;K digital</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td></td><td>2×</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout-green callout" style="margin-top:10px;">
+          <strong>Digital relevant</strong> (blau hervorgehoben): Rezeption audiovisuell, Rezeption schriftlich/bildlich, Produktion schriftlich/bildlich, Produktion multimedial, Interaktion &amp; Kollaboration digital, Rezeption mündlich (Podcasts, Audio).
+        </div>
+      </div>
+
+      <!-- SCHLÜSSELKOMPETENZEN -->
+      <div class="info-panel">
+        <h2>Schlüsselkompetenzen – Zirkularität</h2>
+        <p>12 Schlüsselkompetenzen werden über die Themen verteilt, jede wird <strong>genau zweimal</strong> geübt.</p>
+
+        <table class="mini-table">
+          <thead>
+            <tr><th>Schlüsselkompetenz</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>T8</th></tr>
+          </thead>
+          <tbody>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">3.2.1 Quellen unterscheiden</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.2 Ziele setzen/anpassen</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td></tr>
+            <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">3.2.3 Innovation/Problemlösung</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.4 Teamarbeit</td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.5 Werthaltungen reflektieren</td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.6 Standpunkte begründen</td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td><span class="r-dot r2">2</span></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.7 Verständnis fördern</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.8 Lebensphasen planen</td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td><span class="r-dot r2">2</span></td></tr>
+            <tr><td style="text-align:left;">3.2.9 Nachhaltigkeit</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.10 Anpassung</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td style="text-align:left;">3.2.11 Mehrdeutigkeit</td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td></tr>
+            <tr><td style="text-align:left;">3.2.12 Partizipation</td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout-green callout" style="margin-top:10px;">
+          <strong>Digital relevant</strong> (blau hervorgehoben):<br>
+          3.2.1 Zwischen relevanten und irrelevanten Quellen und Inhalten unterscheiden<br>
+          3.2.3 Antizipative, unternehmerische und innovative Wege der Problemlösung erkennen, entwickeln und umsetzen
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GESELLSCHAFT -->
+    <div class="info-panel">
+      <h2>Gesellschaftsinhalte – Zirkularität</h2>
+      <p>8 Gesellschaftsbereiche werden über die Themen verteilt. Die meisten werden zweimal behandelt, einige dreimal.</p>
+
+      <table class="mini-table">
+        <thead>
+          <tr><th>Gesellschaftsinhalt</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>T8</th><th>Anz.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="text-align:left;">Ethik</td><td></td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
+          <tr><td style="text-align:left;">Identität &amp; Sozialisation</td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td></td><td><strong>3×</strong></td></tr>
+          <tr><td style="text-align:left;">Kultur</td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td>2×</td></tr>
+          <tr><td style="text-align:left;">Ökologie</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td>2×</td></tr>
+          <tr><td style="text-align:left;">Politik</td><td></td><td></td><td></td><td></td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td>2×</td></tr>
+          <tr><td style="text-align:left;">Recht</td><td><span class="r-dot r1">1</span></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td><span class="r-dot r3">3</span></td><td></td><td></td><td><strong>3×</strong></td></tr>
+          <tr class="digital-highlight"><td style="text-align:left;font-weight:600;">Techn. &amp; dig. Transformation</td><td><span class="r-dot r1">1</span></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td></td><td></td><td></td><td>2×</td></tr>
+          <tr><td style="text-align:left;">Wirtschaft</td><td></td><td><span class="r-dot r1">1</span></td><td></td><td></td><td></td><td></td><td><span class="r-dot r2">2</span></td><td></td><td>2×</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout-green callout" style="margin-top:10px;">
+        <strong>Digital relevant</strong> (blau hervorgehoben): Technologische und digitale Transformation – wird in T1 (Berufseinstieg, digitaler Arbeitsplatz) und T4 (Medien und digitale Welt, KI, Recherche) behandelt.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- VIEW 2: THEMEN -->
+  <!-- ============================================ -->
+  <div class="view" id="view-themen">
+
+    <div class="filter-bar no-print">
       <div class="filter-chips" id="themeFilters">
-        <span class="chip active" data-filter="all">Alle</span>
-        <span class="chip" data-filter="1">T1 Berufseinstieg</span>
-        <span class="chip" data-filter="2">T2 Konsum</span>
-        <span class="chip" data-filter="3">T3 Sicherheit</span>
-        <span class="chip" data-filter="4">T4 Medien &amp; Digital</span>
-        <span class="chip" data-filter="5">T5 Politik</span>
-        <span class="chip" data-filter="6">T6 Recht &amp; Ethik</span>
-        <span class="chip" data-filter="7">T7 Arbeit &amp; Zukunft</span>
-        <span class="chip" data-filter="8">T8 Kultur &amp; Kunst</span>
+        <span class="chip active" data-f="all">Alle Themen</span>
+        <span class="chip" data-f="1">T1 Berufseinstieg</span>
+        <span class="chip" data-f="2">T2 Konsum</span>
+        <span class="chip" data-f="3">T3 Sicherheit</span>
+        <span class="chip" data-f="4">T4 Medien &amp; Digital</span>
+        <span class="chip" data-f="5">T5 Politik</span>
+        <span class="chip" data-f="6">T6 Recht &amp; Ethik</span>
+        <span class="chip" data-f="7">T7 Arbeit &amp; Zukunft</span>
+        <span class="chip" data-f="8">T8 Kultur &amp; Kunst</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="expandAll()">Alle aufklappen</button>
+        <button class="btn btn-o" onclick="collapseAll()">Alle zuklappen</button>
+        <button class="btn btn-d" onclick="handlePrint()">Als PDF drucken</button>
       </div>
     </div>
 
-    <div class="filter-section">
-      <div class="filter-label">Fokus</div>
-      <div class="filter-chips" id="focusFilters">
-        <span class="chip active" data-focus="all">Alle Bereiche</span>
-        <span class="chip" data-focus="gesellschaft">Gesellschaftsinhalte</span>
-        <span class="chip" data-focus="sprache">Sprachmodi</span>
-        <span class="chip" data-focus="kompetenz">Schlüsselkompetenzen</span>
-        <span class="chip" data-focus="digital">Digitale Tools</span>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="expandAll()">Alle aufklappen</button>
-      <button class="btn btn-outline" onclick="collapseAll()">Alle zuklappen</button>
-      <button class="btn btn-print" onclick="handlePrint()">Als PDF drucken</button>
-    </div>
-  </div>
-
-  <div class="selected-filters-print" id="printFilterInfo"></div>
-
-  <!-- STATS -->
-  <div class="stats-bar no-print" id="statsBar">
-    <span class="stat-badge">8 Themen</span>
-    <span class="stat-badge">12 Schlüsselkompetenzen</span>
-    <span class="stat-badge">9 Sprachmodi</span>
-    <span class="stat-badge">8 Gesellschaftsbereiche</span>
-  </div>
-
-  <!-- THEMES -->
-  <div id="themesContainer"></div>
-
-  <!-- LEGEND -->
-  <div class="legend no-print">
-    <h3>Legende</h3>
-    <div class="legend-grid">
-      <div class="legend-item"><span class="legend-dot" style="background:#fef3c7; border:1px solid #fcd34d;"></span> Gesellschaftsinhalte</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#dbeafe; border:1px solid #93c5fd;"></span> Sprachmodi</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#ede9fe; border:1px solid #c4b5fd;"></span> Schlüsselkompetenzen</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#f0fdf4; border:1px solid #bbf7d0;"></span> Digitale Werkzeuge &amp; Tools</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#fff;border:1px solid #aaa;"></span><span style="font-size:0.75rem;">R1 = Erstbehandlung, R2 = Vertiefung, R3 = Festigung</span></div>
-    </div>
+    <div id="themesContainer"></div>
   </div>
 
 </div>
 
 <footer class="no-print">
-  <p>SLP ABU EBA – Digitale Kompetenzübersicht &middot; Erstellt auf Basis des Schullehrplans ABU EBA 2-jahrige Grundbildung (Bildungsrat, 05.01.2026)</p>
+  <p>SLP ABU EBA – Digitale Kompetenzübersicht &middot; Basis: Schullehrplan ABU EBA 2-jährige Grundbildung (Bildungsrat, 05.01.2026)</p>
 </footer>
 
 <script>
+// ============================================================
+// DATA – nur digital relevante Aspekte, Begriffe aus dem SLP
+// ============================================================
 const DATA = [
   {
-    id: 1, year: 1,
-    title: "Ins Berufsleben einsteigen",
-    leitidee: "Übergang in die neue Lebensphase: neue Rollen in Betrieb, Schule und Privatleben, Orientierung in fremder Umgebung.",
-    gesellschaft: [
-      { name: "Recht", detail: "Lehrvertrag, Umgangsregeln, Meldewege, Konfliktmanagement", r: "R1" },
-      { name: "Techn. & dig. Transformation", detail: "Ordnerstrukturen, Kommunikationsmittel, Kalender-/Notizfunktionen", r: "R1" },
-      { name: "Identität & Sozialisation", detail: "Lernstrategien, Belastungszeichen, Gesundheitsregeln", r: "R1" }
-    ],
-    sprachmodi: [
-      { name: "Rezeption schriftlich/bildlich", detail: "Texte/Anleitungen zu digitalen Werkzeugen verstehen, Markierhilfe, Lesestrategien", r: "R1" },
-      { name: "Rezeption mündlich", detail: "Aussagen aus Gesprächen/Audioquellen verstehen und nachfragen", r: "R1" },
-      { name: "Interaktion & Kollaboration digital", detail: "Videokonferenz, KI-basierte Tools, digitale Projekte im Team", r: "R1" }
-    ],
-    kompetenzen: [
-      { name: "Ziele setzen und anpassen", r: "R1" },
-      { name: "Verständnis fördern", r: "R1" },
-      { name: "Anpassung", r: "R1" }
-    ],
+    id:1, year:1, title:"Ins Berufsleben einsteigen",
+    sprachmodi: ["Rezeption schriftlich/bildlich (R1)", "Rezeption mündlich (R1)", "I&K digital (R1)"],
+    kompetenzen: ["3.2.2 Ziele setzen/anpassen (R1)", "3.2.7 Verständnis fördern (R1)", "3.2.10 Anpassung (R1)"],
+    gesellschaft: ["Recht (R1)", "Techn. & dig. Transformation (R1)", "Identität & Sozialisation (R1)"],
     lernziele: [
       {
-        titel: "1.1.1 Orientierung in der Arbeitswelt mit Lehrvertrag",
-        inhalt: "Lehrvertrag verstehen, bei Konflikten Kontaktstellen nutzen",
-        digital: ["Videokonferenz-Tools (z.B. Teams, Zoom)", "KI-basierte Chatbots für Fragen zum Lehrvertrag", "Digitale Austauschplattformen (z.B. Moodle, Teams-Kanäle)"]
+        nr:"1.1.1", titel:"Orientierung Arbeitswelt / Lehrvertrag",
+        sprachmodus:"I&K digital: An digitalen Austauschsituationen aktiv teilnehmen (z.B. Videokonferenz); mit KI-basierten Tools interagieren und deren Beiträge reflektieren; digitale Projekte im Team durchführen",
+        gesellschaft:"Recht: Grundlagen Lehrvertrag, Konfliktmanagement, Kontaktstellen",
+        digital:["Videokonferenz (zuhören, Rückfragen stellen)", "KI-basierte Tools (interagieren, reflektieren)", "Digitale Austauschplattformen"]
       },
       {
-        titel: "1.1.2 Digitaler Lern-/Arbeitsplatz einrichten",
-        inhalt: "Ordnerstrukturen nutzen, Kommunikation und Kalender einrichten",
-        digital: ["Cloud-Speicher (OneDrive, Google Drive)", "Kalender-Apps (Outlook, Google Calendar)", "Notiz-Apps (OneNote, Notion, Apple Notes)", "Ordnerstrukturen auf Smartphone/PC"]
+        nr:"1.1.2", titel:"Digitalen Lern-/Arbeitsplatz einrichten",
+        sprachmodus:"Rezeption schriftlich/bildlich: Zentrale Aussagen aus Texten oder bildlichen Anleitungen entnehmen (z.B. zu digitalen Werkzeugen, App-Einstellungen, Ordnerstrukturen, Organisationstools)",
+        gesellschaft:"Techn. & dig. Transformation: Ordnerstrukturen, Kommunikationsmittel einrichten, Kalender- und Notizfunktionen",
+        digital:["Ordnerstrukturen einrichten", "Kommunikationsmittel einrichten", "Kalender- und Notizfunktionen"]
       },
       {
-        titel: "1.2.1 Regeln/Zuständigkeiten in Schule & Betrieb",
-        inhalt: "Hausordnungen, Kommunikationsregeln, betriebliche Vorgaben verstehen",
-        digital: ["Digitale Schulplattformen (Moodle, SharePoint)", "Chat-Regeln in Messenger-Apps"]
+        nr:"1.2.1", titel:"Regeln/Zuständigkeiten verstehen",
+        sprachmodus:"Rezeption schriftlich/bildlich: Zentrale Aussagen aus Texten entnehmen (z.B. Hausordnungen, Kommunikationsregeln, betriebliche Vorgaben)",
+        gesellschaft:"Recht: Umgangsregeln, Meldewege, Zuständigkeiten",
+        digital:[]
       },
       {
-        titel: "1.2.2 Entlastungsstrategien und Selbstsorge",
-        inhalt: "Belastungszeichen erkennen, Gesundheits-/Verhaltensregeln",
-        digital: ["Gesundheits-Apps (z.B. Headspace, Calm)", "Selbsttest-Tools online", "Lernjournal digital führen"]
+        nr:"1.2.2", titel:"Entlastungsstrategien / Selbstsorge",
+        sprachmodus:"Rezeption mündlich: Zentrale Aussagen aus Gesprächen oder Audioquellen verstehen/erkennen",
+        gesellschaft:"Identität & Sozialisation: Belastungszeichen, Gesundheits-/Verhaltensregeln",
+        digital:[]
       }
     ]
   },
   {
-    id: 2, year: 1,
-    title: "Bewusst konsumieren und handeln",
-    leitidee: "Zusammenhang von Konsum, Finanzen, Wirtschaft und ökologischen Folgen erkennen und verantwortungsvoll handeln.",
-    gesellschaft: [
-      { name: "Wirtschaft", detail: "Budget, Schuldenfallen, Betrieb-Kunden-Kommunikation, professioneller Auftritt", r: "R1" },
-      { name: "Ökologie", detail: "Produktbewertung (Herkunft, Energie, Material, Entsorgung), Massenkonsum-Folgen, CO₂-Fussabdruck", r: "R1" }
-    ],
-    sprachmodi: [
-      { name: "Rezeption audiovisuell", detail: "Videos/Clips zu Budget, Konsum und Umweltfolgen verstehen", r: "R1" },
-      { name: "Produktion mündlich", detail: "Meinung äussern, argumentieren zu Konsum und Nachhaltigkeit", r: "R1" }
-    ],
-    kompetenzen: [
-      { name: "Quellen unterscheiden", r: "R1" },
-      { name: "Innovation und Problemlösung", r: "R1" },
-      { name: "Nachhaltigkeit", r: "R1" }
-    ],
+    id:2, year:1, title:"Bewusst konsumieren und handeln",
+    sprachmodi: ["Rezeption audiovisuell (R1)", "Produktion mündlich (R1)"],
+    kompetenzen: ["3.2.1 Quellen unterscheiden (R1)", "3.2.3 Innovation/Problemlösung (R1)", "3.2.9 Nachhaltigkeit (R1)"],
+    gesellschaft: ["Wirtschaft (R1)", "Ökologie (R1)"],
     lernziele: [
       {
-        titel: "2.1.1 Budget erstellen und Schuldenrisiken erkennen",
-        inhalt: "Konsumentscheidungen reflektieren, Schuldenrisiken identifizieren",
-        digital: ["Budget-Apps (z.B. Mint, YNAB, BudgetCH)", "Excel/Google Sheets für Budget-Tabelle", "Erklärvideos zu Finanzkompetenz (YouTube)"]
+        nr:"2.1.1", titel:"Budget erstellen, Schuldenrisiken erkennen",
+        sprachmodus:"Rezeption audiovisuell: Hauptaussagen aus audiovisuellen Medien entnehmen (z.B. kurze Videos oder Clips zu Budget, Ausgaben, Schuldenfallen)",
+        gesellschaft:"Wirtschaft: Grundwissen zu Budget und Schuldenfallen",
+        digital:["Kurze Videos/Clips zu Budget und Schuldenfallen"]
       },
       {
-        titel: "2.1.2 Strategien nachhaltiger Konsum",
-        inhalt: "Produktbewertung, Herkunft, Energieverbrauch, Entsorgung",
-        digital: ["Label-Check-Apps (z.B. Codecheck, Yuka)", "Ökologischer Fussabdruck-Rechner online", "Vergleichsportale für nachhaltigen Konsum"]
+        nr:"2.1.2", titel:"Strategien nachhaltiger Konsum",
+        sprachmodus:"Produktion mündlich: Meinung äussern, Gespräch führen, Argumente verwenden",
+        gesellschaft:"Ökologie: Produktbewertung – Herkunft, Energieverbrauch, Materialien, Entsorgung",
+        digital:[]
       },
       {
-        titel: "2.2.1 Betriebliche Grundlagen verstehen",
-        inhalt: "Produktion, Werbung, Kundenbeziehung im Betrieb beschreiben",
-        digital: ["Präsentationstools (PowerPoint, Canva, Google Slides)", "Branchenvergleich über Webseiten"]
+        nr:"2.2.1", titel:"Betriebliche Grundlagen verstehen",
+        sprachmodus:"Produktion mündlich: Meinung äussern, Gespräch führen, Argumente verwenden",
+        gesellschaft:"Wirtschaft: Betrieb-Kunden-Kommunikation, professioneller Auftritt",
+        digital:[]
       },
       {
-        titel: "2.2.2 Folgen des Massenkonsums aufzeigen",
-        inhalt: "Rohstoffverbrauch, Energie, Transport, Abfall, CO₂",
-        digital: ["Dokumentarfilme/Clips (Streaming, YouTube)", "Infografik-Tools (Canva, Piktochart)", "Interaktive Karten zu globalen Lieferketten"]
+        nr:"2.2.2", titel:"Folgen Massenkonsum aufzeigen",
+        sprachmodus:"Rezeption audiovisuell: Hauptaussagen aus audiovisuellen Medien entnehmen (z.B. Videos über Umweltfolgen des Massenkonsums)",
+        gesellschaft:"Ökologie: Rohstoffverbrauch, Energiebedarf, Transportwege, Abfallmengen, CO₂-Fussabdruck",
+        digital:["Videos/Clips über Umweltfolgen des Massenkonsums"]
       }
     ]
   },
   {
-    id: 3, year: 1,
-    title: "Sicherheit und Gesundheit",
-    leitidee: "Risiken in Alltag, Beruf und digitaler Welt erkennen, kommunizieren und Schutzmassnahmen planen.",
-    gesellschaft: [
-      { name: "Identität & Sozialisation", detail: "Gesundheit, Risikoverhalten, Wohlbefinden, Normen, Rollenbilder", r: "R2" },
-      { name: "Recht", detail: "Sicherheitsregeln, Arbeitsschutzvorgaben, gesetzliche Grundlagen bei Unfällen/Schäden", r: "R2" }
-    ],
-    sprachmodi: [
-      { name: "Produktion schriftlich/bildlich", detail: "Übersichten, Protokolle, Prompts, Bilder erzeugen zu Sicherheitsthemen", r: "R1" },
-      { name: "Interaktion & Kollaboration mündlich", detail: "Austausch über Risiken, Rückmeldungen geben, argumentieren", r: "R1" }
-    ],
-    kompetenzen: [
-      { name: "Teamarbeit", r: "R1" },
-      { name: "Werthaltungen reflektieren", r: "R1" },
-      { name: "Mehrdeutigkeit", r: "R1" }
-    ],
+    id:3, year:1, title:"Sicherheit und Gesundheit",
+    sprachmodi: ["Produktion schriftlich/bildlich (R1)", "I&K mündlich (R1)"],
+    kompetenzen: ["3.2.4 Teamarbeit (R1)", "3.2.5 Werthaltungen reflektieren (R1)", "3.2.11 Mehrdeutigkeit (R1)"],
+    gesellschaft: ["Identität & Sozialisation (R2)", "Recht (R2)"],
     lernziele: [
       {
-        titel: "3.1.1 Risiken im Alltag und Betrieb aufzeigen",
-        inhalt: "Sicherheitsregeln, Gefahrenhinweise, Arbeitsschutz",
-        digital: ["SUVA-App und -Website", "Interaktive Gefahren-Checklisten online", "Diskussionsforen in Lernplattformen (Moodle)"]
+        nr:"3.1.1", titel:"Risiken im Alltag und Betrieb aufzeigen",
+        sprachmodus:"I&K mündlich: An Gesprächen aktiv teilnehmen, zuhören, Aussagen wiedergeben, Rückfragen stellen, Argumente einordnen",
+        gesellschaft:"Recht: Sicherheitsregeln, Gefahrenhinweise, Arbeitsschutzvorgaben",
+        digital:[]
       },
       {
-        titel: "3.1.2 Absicherung prüfen (Versicherungen)",
-        inhalt: "Gesetzliche Grundlagen, Zuständigkeiten bei Unfällen/Schäden",
-        digital: ["Versicherungsvergleich-Portale (Comparis, Bonus.ch)", "KI-Chat für Fachbegriff-Erklärungen", "Prompt-Formulierung für KI-gestützte Recherche"]
+        nr:"3.1.2", titel:"Absicherung prüfen",
+        sprachmodus:"Produktion schriftlich/bildlich: Text/Präsentation/Protokoll schreiben, Prompt formulieren, Bild erzeugen (z.B. Übersicht erstellen)",
+        gesellschaft:"Recht: Gesetzliche Grundlagen für Schutz bei Unfällen/Schäden",
+        digital:["Prompt formulieren", "Bild erzeugen"]
       },
       {
-        titel: "3.2.1 Gesellschaftliche Normen reflektieren",
-        inhalt: "Erwartungen zu Körper, Geschlecht, Identität erkennen",
-        digital: ["Podcast-Plattformen (Spotify, Apple Podcasts)", "Kurzumfrage-Tools (Mentimeter, Wooclap)"]
+        nr:"3.2.1", titel:"Gesellschaftliche Normen reflektieren",
+        sprachmodus:"I&K mündlich: Zuhören, an Gesprächen teilnehmen, Rückmeldung geben, Argumentstruktur erkennen",
+        gesellschaft:"Identität & Sozialisation: Darstellungsweisen in Medien, berufliche Rollenbilder",
+        digital:[]
       },
       {
-        titel: "3.2.2 Gesundheitsfördernder Lebensstil",
-        inhalt: "Eigene Bedürfnisse wahrnehmen, Belastungszeichen erkennen",
-        digital: ["Gesundheits-Tracking-Apps", "Digitales Tagebuch/Lernjournal", "KI-Bildgenerator für Visualisierungen (z.B. Canva AI)"]
+        nr:"3.2.2", titel:"Gesundheitsfördernder Lebensstil",
+        sprachmodus:"Produktion schriftlich/bildlich: Text/Präsentation/Tagebuch schreiben, Prompt formulieren, Bild erzeugen",
+        gesellschaft:"Identität & Sozialisation: Eigene Bedürfnisse wahrnehmen, Belastungszeichen",
+        digital:["Prompt formulieren", "Bild erzeugen"]
       }
     ]
   },
   {
-    id: 4, year: 1,
-    title: "Medien und digitale Welt",
-    leitidee: "Digitale Werkzeuge und KI gezielt einsetzen, Inhalte kritisch beurteilen, kulturelle Prägung erkennen.",
-    gesellschaft: [
-      { name: "Techn. & dig. Transformation", detail: "Digitale Werkzeuge, KI-Funktionen, Recherche, Quellenarchive", r: "R2" },
-      { name: "Kultur", detail: "Digitale Kultur, Social-Media-Kultur, kulturelle Prägung von KI-Inhalten", r: "R1" }
-    ],
-    sprachmodi: [
-      { name: "Interaktion & Kollaboration digital", detail: "Hybrides/asynchrones Arbeiten, Lernjournale, Screencast-Feedback, KI-Iteration", r: "R2" },
-      { name: "Interaktion & Kollaboration schriftlich", detail: "Rückmeldungen (E-Mail, Chat), Quellen sammeln und ordnen", r: "R1" },
-      { name: "Interaktion & Kollaboration mündlich", detail: "Fallbeispiele besprechen, Gruppenentscheidungen, Rollen übernehmen", r: "R2" }
-    ],
-    kompetenzen: [
-      { name: "Quellen unterscheiden", r: "R2" },
-      { name: "Anpassung", r: "R2" },
-      { name: "Partizipation", r: "R1" }
-    ],
+    id:4, year:1, title:"Medien und digitale Welt",
+    sprachmodi: ["I&K digital (R2)", "I&K schriftlich (R1)", "I&K mündlich (R2)"],
+    kompetenzen: ["3.2.1 Quellen unterscheiden (R2)", "3.2.10 Anpassung (R2)", "3.2.12 Partizipation (R1)"],
+    gesellschaft: ["Techn. & dig. Transformation (R2)", "Kultur (R1)"],
     lernziele: [
       {
-        titel: "4.1.1 Digitale Werkzeuge situationsgerecht nutzen",
-        inhalt: "Smartphone-Werkzeugkasten, Kommunikationstools, Office-Programme",
-        digital: ["Microsoft 365 (Word, Excel, PowerPoint, Teams)", "Google Workspace (Docs, Sheets, Slides)", "Kommunikations-Apps (Teams, Slack, WhatsApp Business)", "Smartphone als Arbeitsgerät konfigurieren"]
+        nr:"4.1.1", titel:"Digitale Werkzeuge situationsgerecht nutzen",
+        sprachmodus:"I&K digital: Digitale Dokumente hybrid und asynchron in gemeinsamer Absprache erstellen und gestalten",
+        gesellschaft:"Techn. & dig. Transformation: Werkzeugkasten Smartphone, Kommunikationstools, Officeprogramme",
+        digital:["Werkzeugkasten Smartphone", "Funktionen Kommunikationstools", "Funktionen Officeprogramme", "Hybrides/asynchrones Arbeiten an Dokumenten"]
       },
       {
-        titel: "4.1.2 KI anwenden und Produkte überarbeiten",
-        inhalt: "KI-Funktionen für Text, Bild; Input vs. Output vergleichen, iterativ entwickeln",
-        digital: ["ChatGPT / Copilot / Claude für Textarbeit", "KI-Bildgeneratoren (DALL-E, Midjourney, Canva AI)", "Screencast-Tools (Loom, OBS) für Feedback", "Digitale Lernjournale (OneNote, Notion)"]
+        nr:"4.1.2", titel:"KI anwenden, Produkte mit KI überarbeiten",
+        sprachmodus:"I&K digital: Lernjournale gemeinsam führen, Online-Diskussionen, Screencast-Feedback, asynchrone Teamkommunikation. KI-Outputs dem Input gegenüberstellen und iterativ entwickeln",
+        gesellschaft:"Kultur: KI-Funktionen für die Gestaltung von Medieninhalten",
+        digital:["KI-Funktionen anwenden (Text, Foto)", "KI-Output dem Input gegenüberstellen", "Iterativ mit KI entwickeln", "Screencast-Feedback geben", "Digitale Lernjournale gemeinsam führen"]
       },
       {
-        titel: "4.2.1 Verlässliche Informationen finden und prüfen",
-        inhalt: "Rechercheleitfaden, Recherchefunktionen inkl. KI, Quellendokumentation",
-        digital: ["Suchmaschinen-Operatoren (Google Advanced Search)", "Faktencheck-Websites (Correctiv, Snopes, SRF)", "KI-gestützte Recherche (Perplexity, ChatGPT)", "Quellenmanagement-Tools (Zotero, einfache Tabelle)"]
+        nr:"4.2.1", titel:"Verlässliche Informationen finden und prüfen",
+        sprachmodus:"I&K schriftlich: Schriftliche Rückmeldung verfassen (E-Mail, Brief, Chat, Umfrage), in gemeinsamen Dokumenten Quellen sammeln und nach Kriterien ordnen",
+        gesellschaft:"Techn. & dig. Transformation: Rechercheleitfaden, Recherchefunktionen (inkl. KI), Quellenarchive, Quellendokumentation",
+        digital:["Recherchefunktionen (inkl. KI)", "Quellenarchive nutzen", "Quellendokumentation", "Gemeinsame Dokumente für Quellensammlung"]
       },
       {
-        titel: "4.2.2 Social Media & künstliche Inhalte erkennen",
-        inhalt: "Kulturelle Prägung, Deepfakes, manipulierte Inhalte",
-        digital: ["Deepfake-Erkennungstools", "Reverse Image Search (Google, TinEye)", "Social-Media-Analysetools", "Medienkompass / SRG-Medienkompetenz"]
+        nr:"4.2.2", titel:"Social Media verantwortungsvoll nutzen, KI-Inhalte erkennen",
+        sprachmodus:"I&K mündlich: Gespräche führen, Rückmeldungen differenzieren, Rollen übernehmen, Gruppenentscheidungen, argumentieren, Probleme lösen",
+        gesellschaft:"Kultur: Kulturelle/soziale Hintergründe in Social Media; Kriterien für künstlich erzeugte/verfremdete Inhalte",
+        digital:["Künstlich erzeugte Inhalte erkennen", "Kriterien für verfremdete Inhalte anwenden", "Fallbeispiele aus Social Media analysieren"]
       }
     ]
   },
   {
-    id: 5, year: 2,
-    title: "Meinung bilden und mitgestalten",
-    leitidee: "Politische Entscheidungen verstehen, eigene Meinung bilden, zur aktiven Teilhabe motivieren.",
-    gesellschaft: [
-      { name: "Politik", detail: "Abstimmungsunterlagen, politisches System, Demokratie, Gemeindeorganisation", r: "R1" },
-      { name: "Ökologie", detail: "Klimawandel-Modelle, ökologischer Fussabdruck", r: "R2" }
-    ],
-    sprachmodi: [
-      { name: "Rezeption mündlich", detail: "Politische Aussagen verstehen, Diskussionen folgen, Werte erkennen", r: "R2" },
-      { name: "Produktion multimedial", detail: "Social-Media-Content, Videos, Podcasts, digitale Poster mit KI-Unterstützung", r: "R1" }
-    ],
-    kompetenzen: [
-      { name: "Werthaltungen reflektieren", r: "R2" },
-      { name: "Standpunkte begründen", r: "R1" },
-      { name: "Nachhaltigkeit", r: "R2" }
-    ],
+    id:5, year:2, title:"Meinung bilden und mitgestalten",
+    sprachmodi: ["Rezeption mündlich (R2)", "Produktion multimedial (R1)"],
+    kompetenzen: ["3.2.5 Werthaltungen reflektieren (R2)", "3.2.6 Standpunkte begründen (R1)", "3.2.9 Nachhaltigkeit (R2)"],
+    gesellschaft: ["Politik (R1)", "Ökologie (R2)"],
     lernziele: [
       {
-        titel: "5.1.1 Politische Beiträge verstehen und einordnen",
-        inhalt: "Informationsquellen analysieren, Folgen politischer Entscheidungen",
-        digital: ["Newsportale & Podcasts (SRF, NZZ, 20 Minuten)", "Abstimmungsplattformen (Easyvote, Smartvote)", "KI-Assistent für Argumentaufbau"]
+        nr:"5.1.1", titel:"Politische Beiträge verstehen und einordnen",
+        sprachmodus:"Rezeption mündlich: Absichten erkennen, politische Aussagen verstehen, Diskussionen folgen, Werte hinter Positionen erkennen",
+        gesellschaft:"Ökologie: Modelle Klimawandel, ökologischer Fussabdruck",
+        digital:[]
       },
       {
-        titel: "5.1.2 Eigene Standpunkte entwickeln und vertreten",
-        inhalt: "Meinungsbildung, argumentatives Gespräch",
-        digital: ["KI-Chat für Gegenargument-Training", "Social-Media-Content-Tools (Canva, CapCut)", "Podcast-Aufnahme (Anchor, GarageBand)"]
+        nr:"5.1.2", titel:"Eigene Standpunkte entwickeln und vertreten",
+        sprachmodus:"Produktion multimedial: Content erstellen (z.B. Social-Media), Argumente mit Hilfe eines KI-Assistenten aufbauen",
+        gesellschaft:"Politik: Abstimmungsunterlagen, Medienbeiträge",
+        digital:["Social-Media-Content erstellen", "KI-Assistent für Argumentaufbau"]
       },
       {
-        titel: "5.2.1 Politisches System der Schweiz darstellen",
-        inhalt: "(Halb)direkte Demokratie, Föderalismus verstehen",
-        digital: ["ch.ch – offizielle Schweizer Infoplattform", "Interaktive Grafiken zum politischen System", "Erklärvideos (SRF mySchool, Easyvote)"]
+        nr:"5.2.1", titel:"Politisches System der Schweiz darstellen",
+        sprachmodus:"Produktion multimedial: Content erstellen (z.B. Social-Media), politische Inhalte aufbereiten",
+        gesellschaft:"Politik: (Halb)direkte Demokratie, Föderalismus",
+        digital:["Social-Media-Content erstellen", "Politische Inhalte multimedial aufbereiten"]
       },
       {
-        titel: "5.2.2 Mitwirkungsprojekt gestalten",
-        inhalt: "Kommunale Kampagne für Jugend-Anliegen produzieren",
-        digital: ["Video-Editoren (CapCut, iMovie, Clipchamp)", "Podcast-Tools (Anchor, Spotify for Podcasters)", "Poster-/Flyer-Design (Canva)", "KI-Bild-/Videogeneratoren"]
+        nr:"5.2.2", titel:"Mitwirkungsprojekt gestalten",
+        sprachmodus:"Produktion multimedial: Mit Video- oder Bildgenerator ein kommunales Mitwirkungsprojekt (Video, Podcast, digitales Poster) mit Info und Handlungsaufruf produzieren",
+        gesellschaft:"Politik: Gemeindeorganisation",
+        digital:["Video-/Bildgenerator nutzen", "Video, Podcast oder digitales Poster produzieren", "Handlungsaufruf gestalten"]
       }
     ]
   },
   {
-    id: 6, year: 2,
-    title: "Verträge verstehen – fair handeln",
-    leitidee: "Verträge lesen und verstehen, Rechte/Pflichten ableiten, fair und respektvoll kommunizieren.",
-    gesellschaft: [
-      { name: "Recht", detail: "Vertragsrecht (Kauf, Miete, Abo), AGB, Kündigungsfristen, Vertragsfallen", r: "R3" },
-      { name: "Ethik", detail: "Ethische vs. rechtliche Regelungen, Perspektivenübernahme, moralische Konflikte", r: "R1" }
-    ],
-    sprachmodi: [
-      { name: "Produktion mündlich", detail: "Argumente strukturieren, Redemittel nutzen, Argumentationsaufbau", r: "R2" },
-      { name: "Produktion schriftlich/bildlich", detail: "KI-gestützte Texte/Bilder, Info-Posts, Beschwerdeschreiben, Umfragen", r: "R2" }
-    ],
-    kompetenzen: [
-      { name: "Teamarbeit", r: "R2" },
-      { name: "Standpunkte begründen", r: "R2" },
-      { name: "Verständnis fördern", r: "R2" }
-    ],
+    id:6, year:2, title:"Verträge verstehen – fair handeln",
+    sprachmodi: ["Produktion schriftlich/bildlich (R2)", "Produktion mündlich (R2)"],
+    kompetenzen: ["3.2.4 Teamarbeit (R2)", "3.2.6 Standpunkte begründen (R2)", "3.2.7 Verständnis fördern (R2)"],
+    gesellschaft: ["Recht (R3)", "Ethik (R1)"],
     lernziele: [
       {
-        titel: "6.1.1 Alltagsverträge beurteilen",
-        inhalt: "Kauf-, Miet-, Abo-Verträge analysieren, Rechte/Pflichten ableiten",
-        digital: ["KI-Chat für Fachbegriff-Erklärung (ChatGPT, Copilot)", "Digitale Vertragsvorlagen analysieren", "Canva/Instagram für Info-Posts erstellen", "Promptvorlagen für KI-gestützte Textüberarbeitung"]
+        nr:"6.1.1", titel:"Alltagsverträge beurteilen",
+        sprachmodus:"Produktion schriftlich/bildlich: Text/Bild/Präsentation mit KI-Chat erstellen/überarbeiten, strukturierte Nachricht mit Begründung, Stories mit Bildern, Umfrage ausarbeiten",
+        gesellschaft:"Recht: Grundwissen Vertragsrecht",
+        digital:["KI-Chat zum Erstellen/Überarbeiten von Texten", "Stories mit Bildern erstellen", "Promptvorlagen für KI-Nutzung"]
       },
       {
-        titel: "6.1.2 Rechtliche Abklärung und Unterstützung finden",
-        inhalt: "Beratungsstellen kennen, Beschwerdeschreiben formulieren",
-        digital: ["Beratungsstellen-Websites (Konsumentenschutz, Pro Juventute)", "Vorlagen für formelle Briefe/E-Mails", "KI-Unterstützung für formelle Korrespondenz"]
+        nr:"6.1.2", titel:"Rechtliche Abklärung / Unterstützung finden",
+        sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
+        gesellschaft:"Recht: Grundwissen Vertragsrecht",
+        digital:["Webseiten von Fachstellen", "KI-basierte Analysen"]
       },
       {
-        titel: "6.2.1 Ethische von rechtlichen Regelungen unterscheiden",
-        inhalt: "Ethische Grundsätze, Perspektivenübernahme",
-        digital: ["Dilemma-Szenarien digital aufbereitet", "Abstimmungstools in Klasse (Mentimeter, Kahoot)"]
+        nr:"6.2.1", titel:"Ethische vs. rechtliche Regelungen unterscheiden",
+        sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
+        gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
+        digital:[]
       },
       {
-        titel: "6.2.2 Moralische Konflikte lösen",
-        inhalt: "Moralische Prinzipien anwenden, in Gruppe diskutieren",
-        digital: ["Digitale Diskussionsforen", "Padlet/Miro für Gruppenarbeit", "Rollenspiel-Szenarien digital vorbereiten"]
+        nr:"6.2.2", titel:"Moralische Konflikte lösen",
+        sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
+        gesellschaft:"Ethik: Moralische Prinzipien",
+        digital:[]
       }
     ]
   },
   {
-    id: 7, year: 2,
-    title: "Arbeit und Zukunft",
-    leitidee: "Berufliche Laufbahn planen, Pflichten gegenüber Staat verstehen, selbstständig Verantwortung übernehmen.",
-    gesellschaft: [
-      { name: "Identität & Sozialisation", detail: "Persönlichkeitsentwicklung, Weiterbildung, Zukunftschancen", r: "R3" },
-      { name: "Wirtschaft", detail: "Lohnabrechnungen, Steuern, Sozialversicherungen, wirtschaftliche Situationen", r: "R2" },
-      { name: "Politik", detail: "Politische Pflichten/Rechte, Behördenkontakt", r: "R2" }
-    ],
-    sprachmodi: [
-      { name: "Rezeption schriftlich/bildlich", detail: "Absicht von Texten erkennen, Grafiken/Umfragen interpretieren", r: "R2" },
-      { name: "Interaktion & Kollaboration mündlich", detail: "Zielgerichtete Gespräche, Lösungen entwickeln, Positionen vertreten", r: "R3" },
-      { name: "Interaktion & Kollaboration schriftlich", detail: "Asynchrone Kommunikation, Behördenkontakt schriftlich, Rückmeldungen", r: "R2" }
-    ],
-    kompetenzen: [
-      { name: "Ziele setzen und anpassen", r: "R2" },
-      { name: "Innovation und Problemlösung", r: "R2" },
-      { name: "Lebensphasen planen", r: "R1" }
-    ],
+    id:7, year:2, title:"Arbeit und Zukunft",
+    sprachmodi: ["Rezeption schriftlich/bildlich (R2)", "I&K mündlich (R3)", "I&K schriftlich (R2)"],
+    kompetenzen: ["3.2.2 Ziele setzen/anpassen (R2)", "3.2.3 Innovation/Problemlösung (R2)", "3.2.8 Lebensphasen planen (R1)"],
+    gesellschaft: ["Identität & Sozialisation (R3)", "Wirtschaft (R2)", "Politik (R2)"],
     lernziele: [
       {
-        titel: "7.1.1 Fähigkeiten, Interessen und Ziele reflektieren",
-        inhalt: "Persönlichkeitsentwicklung, Weiterbildungsmöglichkeiten erkunden",
-        digital: ["Berufsberatungs-Plattformen (berufsberatung.ch)", "Persönlichkeitstests online (z.B. 16Personalities)", "KI-gestützte Laufbahnberatung", "Weiterbildungsportale (ausbildung-weiterbildung.ch)"]
+        nr:"7.1.1", titel:"Fähigkeiten, Interessen, Ziele reflektieren",
+        sprachmodus:"Rezeption schriftlich/bildlich: Absicht von Texten erkennen (digital/analog), Grafiken/Umfragen interpretieren",
+        gesellschaft:"Identität & Sozialisation: Persönlichkeitsentwicklung, Weiterbildung, Zukunftschancen",
+        digital:["Digitale Texte lesen und interpretieren", "Grafiken/Umfragen digital interpretieren"]
       },
       {
-        titel: "7.1.2 Berufliche Laufbahn planen und Bewerbung",
-        inhalt: "Bewerbungsdossier, lebenslanges Lernen",
-        digital: ["Lebenslauf-Vorlagen (Canva, Word, Europass)", "Bewerbungsbrief-Unterstützung per KI", "LinkedIn / XING Profilerstellung", "Online-Bewerbungsportale (jobs.ch, Indeed)"]
+        nr:"7.1.2", titel:"Berufliche Laufbahn planen / Bewerbung",
+        sprachmodus:"I&K mündlich: Zielgerichtete Gespräche, Lösungen entwickeln, Rückmeldungen, Gesprächsrollen, Diskussion moderieren",
+        gesellschaft:"Wirtschaft: Verschiedene wirtschaftliche Situationen",
+        digital:["Digitale Tools und KI-Unterstützung für Information und Aufbereitung"]
       },
       {
-        titel: "7.2.1 Pflichten gegenüber Staat/Gesellschaft",
-        inhalt: "Steuern, politische Pflichten und Rechte",
-        digital: ["Steuererklärung online (eTax, EasyTax)", "Behörden-Websites (ch.ch, Gemeindeportale)", "KI-Assistent für Fachbegriffe (Steuern, AHV, BVG)"]
+        nr:"7.2.1", titel:"Pflichten gegenüber Staat/Gesellschaft",
+        sprachmodus:"I&K schriftlich: Mehrmalige schriftliche Kommunikation (Dialog asynchron), Bezug erläutern, schriftliche Rückmeldung",
+        gesellschaft:"Politik: Politische Pflichten und Rechte",
+        digital:["Asynchrone schriftliche Kommunikation"]
       },
       {
-        titel: "7.2.2 Unterlagen für Behörden zusammenstellen",
-        inhalt: "Amtliche Dokumente/Formulare ausfüllen und einreichen",
-        digital: ["Digitale Formulare (eUmzug, Steuererklärung)", "Dokumenten-Scanner-Apps", "E-Mail-Vorlagen für Behördenkontakt", "Cloud-Ablage für Dokumentenmanagement"]
+        nr:"7.2.2", titel:"Unterlagen für Behörden zusammenstellen",
+        sprachmodus:"I&K schriftlich: Schriftlicher Austausch mit Behörden, Dialog asynchron, Bezug erläutern",
+        gesellschaft:"Wirtschaft: Anspruchsgruppen und Zielkonflikte",
+        digital:["Digitale oder analoge Einreichwege nutzen", "Digitale Formulare ausfüllen"]
       }
     ]
   },
   {
-    id: 8, year: 2,
-    title: "Kultur und Kunst",
-    leitidee: "Kultur als Ausdrucksmittel erleben, gesellschaftliche Themen kreativ sichtbar machen, Vielfalt fördern.",
-    gesellschaft: [
-      { name: "Kultur", detail: "Kulturelle Ausdrucksformen, Kunst, Ausdrucksfreiheit, Kultur als Mittel", r: "R2" },
-      { name: "Ethik", detail: "Perspektivenübernahme, Machtverhältnisse, kulturelle Realitäten", r: "R2" }
-    ],
-    sprachmodi: [
-      { name: "Rezeption audiovisuell", detail: "Bildsprache/Tonalität deuten, audiovisuelle Medienformate unterscheiden", r: "R2" },
-      { name: "Rezeption mündlich", detail: "Podcasts, Rollenspiele, publikumsgerechte Präsentationen", r: "R3" },
-      { name: "Produktion multimedial", detail: "Audiovisuelle Programme recherchieren, Storys erstellen, kreative Werke", r: "R2" }
-    ],
-    kompetenzen: [
-      { name: "Lebensphasen planen", r: "R2" },
-      { name: "Mehrdeutigkeit", r: "R2" },
-      { name: "Partizipation", r: "R2" }
-    ],
+    id:8, year:2, title:"Kultur und Kunst",
+    sprachmodi: ["Rezeption audiovisuell (R2)", "Rezeption mündlich (R3)", "Produktion multimedial (R2)"],
+    kompetenzen: ["3.2.8 Lebensphasen planen (R2)", "3.2.11 Mehrdeutigkeit (R2)", "3.2.12 Partizipation (R2)"],
+    gesellschaft: ["Kultur (R2)", "Ethik (R2)"],
     lernziele: [
       {
-        titel: "8.1.1 Kulturelle Ausdrucksformen beschreiben",
-        inhalt: "Sprache, Bilder, Werke aus dem Umfeld, Ausdrucksfreiheit",
-        digital: ["Virtuelle Museumsbesuche (Google Arts & Culture)", "Streaming-Dienste für Kunst/Dokumentationen", "Bild-/Videoanalyse-Tools"]
+        nr:"8.1.1", titel:"Kulturelle Ausdrucksformen beschreiben",
+        sprachmodus:"Rezeption audiovisuell: Bildsprache/Tonalität deuten, Nonverbalität interpretieren, audiovisuelle Medienformate unterscheiden",
+        gesellschaft:"Kultur: Ausdrucksformen von Kunst",
+        digital:["Audiovisuelle Medienformate unterscheiden"]
       },
       {
-        titel: "8.1.2 Kulturelle Phänomene reflektieren",
-        inhalt: "Zugehörigkeit, Machtverhältnisse, ethische Grundsätze",
-        digital: ["Podcast-Plattformen (Spotify, Apple Podcasts)", "Rollenspiel-Szenarien digital aufbereiten", "Mentimeter/Wooclap für Meinungsbilder"]
+        nr:"8.1.2", titel:"Kulturelle Phänomene reflektieren",
+        sprachmodus:"Rezeption mündlich: Beitrag im Podcast/Rollenspiel, publikumsgerecht präsentieren",
+        gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
+        digital:["Podcast/Rollenspiel"]
       },
       {
-        titel: "8.2.1 Kreative Ausdrucksformen nutzen",
-        inhalt: "Auf gesellschaftliche Entwicklungen reagieren, Denkanstösse geben",
-        digital: ["Video-Editoren (CapCut, iMovie, Clipchamp)", "KI-Bild-/Videogeneratoren (DALL-E, Runway)", "Digital Storytelling Tools (Storybird, Adobe Spark)", "Street-Art-Simulation (digitale Graffiti-Tools)"]
+        nr:"8.2.1", titel:"Kreative Ausdrucksformen nutzen",
+        sprachmodus:"Produktion multimedial: Neue audiovisuelle Programme recherchieren und damit Storys erstellen",
+        gesellschaft:"Kultur: Kultur als Ausdrucksmittel",
+        digital:["Neue audiovisuelle Programme recherchieren", "Storys damit erstellen"]
       },
       {
-        titel: "8.2.2 Verschiedene Lesarten eines Kunstwerks diskutieren",
-        inhalt: "Begründete Diskussion, Perspektivenvielfalt",
-        digital: ["Digitale Pinnwände (Padlet, Miro, Jamboard)", "KI für Interpretationshilfen", "Audiovisuelle Storytelling-Programme"]
+        nr:"8.2.2", titel:"Lesarten eines Kunstwerks diskutieren",
+        sprachmodus:"Produktion multimedial: Neue audiovisuelle Programme recherchieren und damit Storys erstellen",
+        gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
+        digital:["Audiovisuelle Programme für Storys nutzen"]
       }
     ]
   }
 ];
 
-const themeColors = ['','#2563eb','#16a34a','#dc2626','#9333ea','#ea580c','#0891b2','#4f46e5','#be185d'];
-const themeColorsBg = ['','#eff4ff','#effcf3','#fef2f2','#faf5ff','#fff7ed','#ecfeff','#eef2ff','#fdf2f8'];
+const TC = ['','#2563eb','#16a34a','#dc2626','#9333ea','#ea580c','#0891b2','#4f46e5','#be185d'];
 
-// State
 let activeThemes = new Set(['all']);
-let activeFocus = 'all';
 
-function renderThemes() {
-  const container = document.getElementById('themesContainer');
-  container.innerHTML = '';
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
 
-  DATA.forEach(theme => {
-    const visible = activeThemes.has('all') || activeThemes.has(String(theme.id));
+function render() {
+  const c = document.getElementById('themesContainer');
+  c.innerHTML = '';
+  DATA.forEach(t => {
+    const vis = activeThemes.has('all') || activeThemes.has(String(t.id));
+    const hasDigital = t.lernziele.some(lz => lz.digital.length > 0);
+
     const card = document.createElement('div');
-    card.className = `theme-card${visible ? ' open' : ' hidden'}`;
-    card.dataset.theme = theme.id;
-
-    const showG = activeFocus === 'all' || activeFocus === 'gesellschaft';
-    const showS = activeFocus === 'all' || activeFocus === 'sprache';
-    const showK = activeFocus === 'all' || activeFocus === 'kompetenz';
-    const showD = activeFocus === 'all' || activeFocus === 'digital';
+    card.className = 'theme-card' + (vis ? ' open' : ' hidden');
 
     card.innerHTML = `
-      <div class="theme-header" onclick="toggleCard(this)">
-        <div class="theme-num" style="background:${themeColors[theme.id]}">T${theme.id}</div>
-        <h2>${theme.title}</h2>
-        <span class="year-badge">${theme.year}. Lehrjahr</span>
-        <span class="toggle-icon">&#9660;</span>
+      <div class="th-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="th-num" style="background:${TC[t.id]}">T${t.id}</div>
+        <h2>${t.title}</h2>
+        <span class="yr">${t.year}. LJ</span>
+        <span class="arrow">&#9660;</span>
       </div>
-      <div class="theme-body">
-        <div class="leitidee">${theme.leitidee}</div>
+      <div class="th-body">
+        <div class="sec-title">Kompetenzen &amp; Modi in diesem Thema</div>
+        <div class="chip-row">
+          ${t.gesellschaft.map(g => `<span class="chip-sm chip-g">${g}</span>`).join('')}
+          ${t.sprachmodi.map(s => `<span class="chip-sm chip-s">${s}</span>`).join('')}
+          ${t.kompetenzen.map(k => `<span class="chip-sm chip-k">${k}</span>`).join('')}
+        </div>
 
-        ${showG ? `
-        <div class="section-title">Gesellschaftsinhalte</div>
-        <div class="tag-list">
-          ${theme.gesellschaft.map(g => `<span class="tag tag-gesellschaft">${g.name} <span class="tag-r">${g.r}</span></span>`).join('')}
-        </div>
-        <div style="margin-top:6px;">
-          ${theme.gesellschaft.map(g => `<div class="comp-detail"><strong>${g.name}:</strong> ${g.detail}</div>`).join('')}
-        </div>
-        ` : ''}
-
-        ${showS ? `
-        <div class="section-title">Sprachmodi</div>
-        <div class="tag-list">
-          ${theme.sprachmodi.map(s => `<span class="tag tag-sprache">${s.name} <span class="tag-r">${s.r}</span></span>`).join('')}
-        </div>
-        <div style="margin-top:6px;">
-          ${theme.sprachmodi.map(s => `<div class="comp-detail"><strong>${s.name}:</strong> ${s.detail}</div>`).join('')}
-        </div>
-        ` : ''}
-
-        ${showK ? `
-        <div class="section-title">Schlüsselkompetenzen</div>
-        <div class="tag-list">
-          ${theme.kompetenzen.map(k => `<span class="tag tag-kompetenz">${k.name} <span class="tag-r">${k.r}</span></span>`).join('')}
-        </div>
-        ` : ''}
-
-        <div class="section-title">Lernziele &amp; Digitale Umsetzung</div>
-        ${theme.lernziele.map(lz => `
-          <div class="comp-row" style="border-left-color:${themeColors[theme.id]};">
-            <h4>${lz.titel}</h4>
-            <p>${lz.inhalt}</p>
-            ${showD ? `
-            <div class="digital-box">
-              <h5>Digitale Werkzeuge &amp; Tools</h5>
-              <ul>
-                ${lz.digital.map(d => `<li>${d}</li>`).join('')}
-              </ul>
-            </div>
-            ` : ''}
+        <div class="sec-title">Lernziele – digitale Aspekte</div>
+        ${t.lernziele.map(lz => `
+          <div class="lz-row" style="border-left-color:${TC[t.id]}">
+            <h4>${lz.nr} ${lz.titel}</h4>
+            <div class="gesellschaft"><strong>Gesellschaft:</strong> ${lz.gesellschaft}</div>
+            <div class="sprachmodus"><strong>Sprachmodus:</strong> ${lz.sprachmodus}</div>
+            ${lz.digital.length > 0 ? `
+            <div class="digi-box">
+              <h5>Digitale Aktivitäten (gemäss SLP)</h5>
+              <ul>${lz.digital.map(d => `<li>${d}</li>`).join('')}</ul>
+            </div>` : '<div style="font-size:.78rem;color:var(--muted);margin-top:4px;font-style:italic;">Kein expliziter digitaler Bezug im SLP</div>'}
           </div>
         `).join('')}
       </div>
     `;
-    container.appendChild(card);
+    c.appendChild(card);
   });
 }
 
-// Filter logic
 document.getElementById('themeFilters').addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  const val = chip.dataset.filter;
-
-  if (val === 'all') {
-    activeThemes = new Set(['all']);
-  } else {
+  const ch = e.target.closest('.chip');
+  if (!ch) return;
+  const v = ch.dataset.f;
+  if (v === 'all') { activeThemes = new Set(['all']); }
+  else {
     activeThemes.delete('all');
-    if (activeThemes.has(val)) {
-      activeThemes.delete(val);
-      if (activeThemes.size === 0) activeThemes.add('all');
-    } else {
-      activeThemes.add(val);
-    }
+    activeThemes.has(v) ? activeThemes.delete(v) : activeThemes.add(v);
+    if (!activeThemes.size) activeThemes.add('all');
   }
-  updateChips('themeFilters', activeThemes, 'filter');
-  renderThemes();
+  document.querySelectorAll('#themeFilters .chip').forEach(c => c.classList.toggle('active', activeThemes.has(c.dataset.f)));
+  render();
 });
 
-document.getElementById('focusFilters').addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  activeFocus = chip.dataset.focus;
-  updateChips('focusFilters', new Set([activeFocus]), 'focus');
-  renderThemes();
-});
-
-function updateChips(containerId, activeSet, attr) {
-  document.querySelectorAll(`#${containerId} .chip`).forEach(c => {
-    const val = c.dataset[attr];
-    c.classList.toggle('active', activeSet.has(val));
-  });
-}
-
-function toggleCard(header) {
-  header.parentElement.classList.toggle('open');
-}
-
-function expandAll() {
-  document.querySelectorAll('.theme-card:not(.hidden)').forEach(c => c.classList.add('open'));
-}
-
-function collapseAll() {
-  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('open'));
-}
-
+function expandAll() { document.querySelectorAll('.theme-card:not(.hidden)').forEach(c => c.classList.add('open')); }
+function collapseAll() { document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('open')); }
 function handlePrint() {
-  // Expand all visible cards for print
+  document.querySelectorAll('.view').forEach(v => v.classList.add('active'));
   document.querySelectorAll('.theme-card:not(.hidden)').forEach(c => c.classList.add('open'));
-
-  // Build print filter info
-  let info = 'Ausgewählt: ';
-  if (activeThemes.has('all')) {
-    info += 'Alle Themen';
-  } else {
-    const names = [];
-    activeThemes.forEach(id => {
-      const t = DATA.find(d => d.id === parseInt(id));
-      if (t) names.push(`T${t.id} ${t.title}`);
-    });
-    info += names.join(', ');
-  }
-  info += ` | Fokus: ${activeFocus === 'all' ? 'Alle Bereiche' : activeFocus}`;
-  document.getElementById('printFilterInfo').textContent = info;
-
   setTimeout(() => window.print(), 200);
 }
 
-// Initial render
-renderThemes();
+render();
 </script>
-
 </body>
 </html>
