@@ -26,7 +26,7 @@
     header h1 { font-size:1.5rem; font-weight:700; }
     header p { font-size:0.9rem; opacity:.85; margin-top:4px; }
 
-    .container { max-width:1060px; margin:0 auto; padding:0 20px; }
+    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
 
     /* NAV TABS */
     .nav-tabs { display:flex; gap:4px; margin:20px auto 0; background:var(--card); border-radius:var(--radius); padding:4px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
@@ -79,24 +79,53 @@
 
     .sec-title { font-size:.74rem; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin:14px 0 6px; padding-bottom:3px; border-bottom:1px solid var(--border); }
 
-    .lz-row { background:#f9fafb; border-radius:8px; padding:12px 14px; margin-bottom:8px; border-left:3px solid transparent; }
+    .lz-row { background:#f9fafb; border-radius:8px; padding:12px 14px; margin-bottom:10px; border-left:3px solid transparent; }
     .lz-row h4 { font-size:.86rem; font-weight:600; margin-bottom:4px; }
     .lz-row .sprachmodus { font-size:.8rem; color:var(--muted); margin-bottom:4px; }
     .lz-row .sprachmodus strong { color:#1e40af; }
     .lz-row .gesellschaft { font-size:.8rem; color:var(--muted); margin-bottom:4px; }
     .lz-row .gesellschaft strong { color:#92400e; }
 
+    /* DIGITAL BOX – grün: SLP-Aktivitäten */
     .digi-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 12px; margin-top:6px; }
     .digi-box h5 { font-size:.74rem; font-weight:700; color:#166534; margin-bottom:3px; }
     .digi-box ul { list-style:none; padding:0; }
     .digi-box li { font-size:.78rem; color:#15803d; padding:1px 0 1px 14px; position:relative; }
     .digi-box li::before { content:'→'; position:absolute; left:0; }
 
-    .tools-box { background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:8px 12px; margin-top:5px; }
-    .tools-box h5 { font-size:.74rem; font-weight:700; color:#0369a1; margin-bottom:3px; }
-    .tools-box ul { list-style:none; padding:0; }
-    .tools-box li { font-size:.78rem; color:#0c4a6e; padding:1px 0 1px 14px; position:relative; }
-    .tools-box li::before { content:'⚙'; position:absolute; left:0; font-size:.65rem; }
+    /* TOOLS GRID – 3 Spalten unter digi-box */
+    .tools-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:6px; }
+    @media(max-width:800px) { .tools-grid { grid-template-columns:1fr; } }
+
+    .tool-col { border-radius:6px; padding:7px 10px; font-size:.74rem; }
+    .tool-col h6 { font-size:.66rem; text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:4px; }
+    .tool-col ul { list-style:none; padding:0; margin:0; }
+    .tool-col li { padding:1px 0 1px 12px; position:relative; font-size:.74rem; }
+    .tool-col li::before { content:'•'; position:absolute; left:0; font-weight:700; }
+    .tool-col li.empty { font-style:italic; color:var(--muted); }
+    .tool-col li.empty::before { content:''; }
+
+    .col-lern { background:#f0f9ff; border:1px solid #bae6fd; }
+    .col-lern h6 { color:#0369a1; }
+    .col-lern li { color:#0c4a6e; }
+
+    .col-lp { background:#faf5ff; border:1px solid #e9d5ff; }
+    .col-lp h6 { color:#7c3aed; }
+    .col-lp li { color:#6b21a8; }
+
+    .col-dc { background:#fefce8; border:1px solid #fde68a; }
+    .col-dc h6 { color:#a16207; }
+    .col-dc li { color:#854d0e; font-size:.72rem; }
+    .col-dc li::before { content:'◆'; font-size:.55rem; top:3px; }
+
+    /* LP-ONLY BOX für Lernziele ohne digitalen Bezug */
+    .lp-only-box { background:#faf5ff; border:1px solid #e9d5ff; border-radius:6px; padding:7px 10px; margin-top:6px; font-size:.74rem; }
+    .lp-only-box h6 { font-size:.66rem; text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin-bottom:3px; color:#7c3aed; }
+    .lp-only-box ul { list-style:none; padding:0; margin:0; }
+    .lp-only-box li { padding:1px 0 1px 12px; position:relative; font-size:.74rem; color:#6b21a8; }
+    .lp-only-box li::before { content:'•'; position:absolute; left:0; font-weight:700; }
+    .lp-sub { font-size:.64rem; text-transform:uppercase; letter-spacing:.3px; font-weight:600; color:#9333ea; margin:4px 0 2px; }
+    .lp-sub:first-child { margin-top:0; }
 
     .chip-row { display:flex; flex-wrap:wrap; gap:5px; margin:4px 0; }
     .chip-sm { display:inline-block; padding:2px 10px; border-radius:12px; font-size:.72rem; font-weight:600; }
@@ -241,12 +270,33 @@
       </div>
     </div>
 
+    <!-- DIGCOMP -->
+    <div class="info-panel">
+      <h2>DigComp – Anwendungsorientierte Einbindung digitaler Kompetenzen</h2>
+      <p>Die digitalen Aktivitäten im SLP lassen sich den fünf Kompetenzbereichen des <strong>Digital Competence Framework (DigComp)</strong> zuordnen. Pro Lernziel mit digitalem Bezug wird der DigComp-Bezug ausgewiesen.</p>
+      <table class="mini-table" style="margin-top:12px;">
+        <thead><tr><th style="text-align:left;">DigComp-Bereich</th><th style="text-align:left;">Fokus</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left;font-weight:600;">Informations- und Datenkompetenz</td><td style="text-align:left;">Reflexion und Begründung der Such- und Auswahlstrategien</td></tr>
+          <tr><td style="text-align:left;font-weight:600;">Kommunikation und Kollaboration</td><td style="text-align:left;">Adressatengerechte digitale Kommunikation</td></tr>
+          <tr><td style="text-align:left;font-weight:600;">Digitale Produktion</td><td style="text-align:left;">Zweckmässiger Einsatz digitaler Werkzeuge</td></tr>
+          <tr><td style="text-align:left;font-weight:600;">Kritisches Denken und Ethik</td><td style="text-align:left;">Kritische Beurteilung von Quellen und digitalen Inhalten</td></tr>
+          <tr><td style="text-align:left;font-weight:600;">Problemlösung und Selbststeuerung</td><td style="text-align:left;">Dokumentation und Reflexion des Vorgehens</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px;font-size:.8rem;color:var(--muted);">Quelle: Digital Competence Framework (DigComp) – Joint Research Centre / PHZH, Allgemeinbildung 2030, Kanton Zürich.</p>
+    </div>
+
   </div>
 
   <!-- ============================================ -->
   <!-- VIEW 2: THEMEN -->
   <!-- ============================================ -->
   <div class="view" id="view-themen">
+
+    <div class="info-panel" style="padding:16px 20px;">
+      <p style="font-size:.84rem;"><strong>Lesehinweis:</strong> Bei Lernzielen mit digitalem Bezug wird eine <strong>Dreispalten-Übersicht</strong> angezeigt: <span style="color:#0369a1;font-weight:600;">Lernende</span> (BBW-Tools) · <span style="color:#7c3aed;font-weight:600;">Lehrperson</span> (Vorbereitung &amp; Organisation) · <span style="color:#a16207;font-weight:600;">DigComp</span> (Kompetenzbezug). Auch bei Lernzielen ohne expliziten digitalen Bezug werden LP-Hinweise angegeben.</p>
+    </div>
 
     <div class="filter-bar no-print">
       <div class="filter-chips" id="themeFilters">
@@ -273,12 +323,12 @@
 </div>
 
 <footer class="no-print">
-  <p>SLP ABU EBA – Digitale Kompetenzübersicht &middot; Basis: Schullehrplan ABU EBA 2-jährige Grundbildung (Bildungsrat, 05.01.2026) &amp; Lizenzbestand BBW</p>
+  <p>SLP ABU EBA – Digitale Kompetenzübersicht &middot; Basis: Schullehrplan ABU EBA 2-jährige Grundbildung (Bildungsrat, 05.01.2026) &amp; Lizenzbestand BBW &amp; DigComp (PHZH)</p>
 </footer>
 
 <script>
 // ============================================================
-// DATA – nur digital relevante Aspekte, Begriffe aus dem SLP
+// DATA
 // ============================================================
 const DATA = [
   {
@@ -292,26 +342,38 @@ const DATA = [
         sprachmodus:"I&K digital: An digitalen Austauschsituationen aktiv teilnehmen (z.B. Videokonferenz); mit KI-basierten Tools interagieren und deren Beiträge reflektieren; digitale Projekte im Team durchführen",
         gesellschaft:"Recht: Grundlagen Lehrvertrag, Konfliktmanagement, Kontaktstellen",
         digital:["Videokonferenz (zuhören, Rückfragen stellen)", "KI-basierte Tools (interagieren, reflektieren)", "Digitale Austauschplattformen"],
-        tools:["Teams – Videokonferenz, Chat, Dateien","Copilot – KI-Chat für Fragen","OpenOlat – Aufgaben bearbeiten"]
+        tools:["Teams – Videokonferenz, Chat, Dateien","Copilot – KI-Chat für Fragen","OpenOlat – Aufgaben bearbeiten"],
+        vorb:["to-teach.ai – Arbeitsblätter generieren","Copilot – Fallbeispiele erstellen","fobizz – Lernraum vorbereiten"],
+        org:["Teams – Aufgaben verteilen, Dateiaustausch","OpenOlat – Kurs/Aufgaben bereitstellen","fobizz – Lernräume freischalten"],
+        digcomp:["Kommunikation und Kollaboration","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"1.1.2", titel:"Digitalen Lern-/Arbeitsplatz einrichten",
         sprachmodus:"Rezeption schriftlich/bildlich: Zentrale Aussagen aus Texten oder bildlichen Anleitungen entnehmen (z.B. zu digitalen Werkzeugen, App-Einstellungen, Ordnerstrukturen, Organisationstools)",
         gesellschaft:"Techn. & dig. Transformation: Ordnerstrukturen, Kommunikationsmittel einrichten, Kalender- und Notizfunktionen",
         digital:["Ordnerstrukturen einrichten", "Kommunikationsmittel einrichten", "Kalender- und Notizfunktionen"],
-        tools:["OneNote – Lernjournal einrichten","Teams – Chat/Kalender nutzen","Word – Dokumente erstellen/ablegen"]
+        tools:["OneNote – Lernjournal einrichten","Teams – Chat/Kalender nutzen","Word – Dokumente erstellen/ablegen"],
+        vorb:["to-teach.ai – Anleitungen generieren","Word – Schritt-für-Schritt-Anleitungen"],
+        org:["Teams – Klassenkommunikation einrichten","OneNote – Klassennotebook anlegen"],
+        digcomp:["Digitale Produktion","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"1.2.1", titel:"Regeln/Zuständigkeiten verstehen",
         sprachmodus:"Rezeption schriftlich/bildlich: Zentrale Aussagen aus Texten entnehmen (z.B. Hausordnungen, Kommunikationsregeln, betriebliche Vorgaben)",
         gesellschaft:"Recht: Umgangsregeln, Meldewege, Zuständigkeiten",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Word/PowerPoint – Unterlagen erstellen"],
+        org:["OpenOlat – Dokumente bereitstellen"],
+        digcomp:[]
       },
       {
         nr:"1.2.2", titel:"Entlastungsstrategien / Selbstsorge",
         sprachmodus:"Rezeption mündlich: Zentrale Aussagen aus Gesprächen oder Audioquellen verstehen/erkennen",
         gesellschaft:"Identität & Sozialisation: Belastungszeichen, Gesundheits-/Verhaltensregeln",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Clipchamp – Audio-/Videobeiträge vorbereiten"],
+        org:["Mentimeter – Stimmungsbild erheben"],
+        digcomp:[]
       }
     ]
   },
@@ -326,26 +388,38 @@ const DATA = [
         sprachmodus:"Rezeption audiovisuell: Hauptaussagen aus audiovisuellen Medien entnehmen (z.B. kurze Videos oder Clips zu Budget, Ausgaben, Schuldenfallen)",
         gesellschaft:"Wirtschaft: Grundwissen zu Budget und Schuldenfallen",
         digital:["Kurze Videos/Clips zu Budget und Schuldenfallen"],
-        tools:["Excel – Budget-Tabelle ausfüllen","Copilot – Fachbegriffe nachfragen"]
+        tools:["Excel – Budget-Tabelle ausfüllen","Copilot – Fachbegriffe nachfragen"],
+        vorb:["simpleshow – Erklärvideo Budget erstellen","Excel – Budgetvorlage vorbereiten","Clipchamp – Videoclips produzieren"],
+        org:["OpenOlat – Videos einbetten, Aufgaben stellen","Forms – Budget-Quiz erstellen"],
+        digcomp:["Informations- und Datenkompetenz","Digitale Produktion"]
       },
       {
         nr:"2.1.2", titel:"Strategien nachhaltiger Konsum",
         sprachmodus:"Produktion mündlich: Meinung äussern, Gespräch führen, Argumente verwenden",
         gesellschaft:"Ökologie: Produktbewertung – Herkunft, Energieverbrauch, Materialien, Entsorgung",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Copilot – Diskussionsfragen generieren"],
+        org:["Mentimeter – Meinungsbild erheben"],
+        digcomp:[]
       },
       {
         nr:"2.2.1", titel:"Betriebliche Grundlagen verstehen",
         sprachmodus:"Produktion mündlich: Meinung äussern, Gespräch führen, Argumente verwenden",
         gesellschaft:"Wirtschaft: Betrieb-Kunden-Kommunikation, professioneller Auftritt",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["PowerPoint – Präsentation vorbereiten"],
+        org:["Padlet – Branchenvergleich sammeln"],
+        digcomp:[]
       },
       {
         nr:"2.2.2", titel:"Folgen Massenkonsum aufzeigen",
         sprachmodus:"Rezeption audiovisuell: Hauptaussagen aus audiovisuellen Medien entnehmen (z.B. Videos über Umweltfolgen des Massenkonsums)",
         gesellschaft:"Ökologie: Rohstoffverbrauch, Energiebedarf, Transportwege, Abfallmengen, CO₂-Fussabdruck",
         digital:["Videos/Clips über Umweltfolgen des Massenkonsums"],
-        tools:["Statista – Daten recherchieren","Canva – Infografik erstellen"]
+        tools:["Statista – Daten recherchieren","Canva – Infografik erstellen"],
+        vorb:["Clipchamp – Videoclips vorbereiten","Statista – Statistiken recherchieren"],
+        org:["OpenOlat – Videos/Aufgaben einbetten"],
+        digcomp:["Informations- und Datenkompetenz","Digitale Produktion"]
       }
     ]
   },
@@ -359,27 +433,39 @@ const DATA = [
         nr:"3.1.1", titel:"Risiken im Alltag und Betrieb aufzeigen",
         sprachmodus:"I&K mündlich: An Gesprächen aktiv teilnehmen, zuhören, Aussagen wiedergeben, Rückfragen stellen, Argumente einordnen",
         gesellschaft:"Recht: Sicherheitsregeln, Gefahrenhinweise, Arbeitsschutzvorgaben",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["to-teach.ai – Arbeitsblätter generieren","Actionbound – Sicherheits-Rallye erstellen"],
+        org:["Actionbound – Rallye durchführen","Mentimeter – Gefahren-Ranking"],
+        digcomp:[]
       },
       {
         nr:"3.1.2", titel:"Absicherung prüfen",
         sprachmodus:"Produktion schriftlich/bildlich: Text/Präsentation/Protokoll schreiben, Prompt formulieren, Bild erzeugen (z.B. Übersicht erstellen)",
         gesellschaft:"Recht: Gesetzliche Grundlagen für Schutz bei Unfällen/Schäden",
         digital:["Prompt formulieren", "Bild erzeugen"],
-        tools:["Copilot – Prompts formulieren, Fachbegriffe klären","Canva – Übersicht/Bild erzeugen"]
+        tools:["Copilot – Prompts formulieren, Fachbegriffe klären","Canva – Übersicht/Bild erzeugen"],
+        vorb:["fobizz – KI-Lernraum mit Prompts vorbereiten"],
+        org:["fobizz – Lernraum freischalten","Forms – Verständnis-Check"],
+        digcomp:["Digitale Produktion","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"3.2.1", titel:"Gesellschaftliche Normen reflektieren",
         sprachmodus:"I&K mündlich: Zuhören, an Gesprächen teilnehmen, Rückmeldung geben, Argumentstruktur erkennen",
         gesellschaft:"Identität & Sozialisation: Darstellungsweisen in Medien, berufliche Rollenbilder",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Copilot – Diskussionsimpulse erstellen"],
+        org:["Mentimeter – Umfrage/Wortwolke"],
+        digcomp:[]
       },
       {
         nr:"3.2.2", titel:"Gesundheitsfördernder Lebensstil",
         sprachmodus:"Produktion schriftlich/bildlich: Text/Präsentation/Tagebuch schreiben, Prompt formulieren, Bild erzeugen",
         gesellschaft:"Identität & Sozialisation: Eigene Bedürfnisse wahrnehmen, Belastungszeichen",
         digital:["Prompt formulieren", "Bild erzeugen"],
-        tools:["Copilot – Prompts formulieren","Canva – Visualisierung erstellen","OneNote – Tagebuch/Journal"]
+        tools:["Copilot – Prompts formulieren","Canva – Visualisierung erstellen","OneNote – Tagebuch/Journal"],
+        vorb:["fobizz – KI-Aufgaben vorbereiten"],
+        org:["fobizz – Lernraum"],
+        digcomp:["Digitale Produktion","Problemlösung und Selbststeuerung"]
       }
     ]
   },
@@ -394,28 +480,40 @@ const DATA = [
         sprachmodus:"I&K digital: Digitale Dokumente hybrid und asynchron in gemeinsamer Absprache erstellen und gestalten",
         gesellschaft:"Techn. & dig. Transformation: Werkzeugkasten Smartphone, Kommunikationstools, Officeprogramme",
         digital:["Werkzeugkasten Smartphone", "Funktionen Kommunikationstools", "Funktionen Officeprogramme", "Hybrides/asynchrones Arbeiten an Dokumenten"],
-        tools:["Word – Dokumente erstellen","Excel – Tabellen anlegen","PowerPoint – Präsentationen","Teams – Zusammenarbeit","OneNote – Notizen"]
+        tools:["Word – Dokumente erstellen","Excel – Tabellen anlegen","PowerPoint – Präsentationen","Teams – Zusammenarbeit","OneNote – Notizen"],
+        vorb:["to-teach.ai – Übungen zu Office-Tools","Word – Anleitungen erstellen"],
+        org:["Teams – Gemeinsame Dokumente","OneNote – Klassennotebook"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"4.1.2", titel:"KI anwenden, Produkte mit KI überarbeiten",
         sprachmodus:"I&K digital: Lernjournale gemeinsam führen, Online-Diskussionen, Screencast-Feedback, asynchrone Teamkommunikation. KI-Outputs dem Input gegenüberstellen und iterativ entwickeln",
         gesellschaft:"Kultur: KI-Funktionen für die Gestaltung von Medieninhalten",
         digital:["KI-Funktionen anwenden (Text, Foto)", "KI-Output dem Input gegenüberstellen", "Iterativ mit KI entwickeln", "Screencast-Feedback geben", "Digitale Lernjournale gemeinsam führen"],
-        tools:["Copilot – KI-Chat für Text","Canva – KI-Bildgenerierung","Clipchamp – Screencast-Feedback","OneNote – Lernjournal führen"]
+        tools:["Copilot – KI-Chat für Text","Canva – KI-Bildgenerierung","Clipchamp – Screencast-Feedback","OneNote – Lernjournal führen"],
+        vorb:["fobizz – KI-Lernraum mit Aufgaben","Copilot – Beispiel-Prompts vorbereiten","Clipchamp – Screencast-Anleitung"],
+        org:["fobizz – KI-Lernraum freischalten","OneNote – Lernjournale verwalten"],
+        digcomp:["Digitale Produktion","Kritisches Denken und Ethik","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"4.2.1", titel:"Verlässliche Informationen finden und prüfen",
         sprachmodus:"I&K schriftlich: Schriftliche Rückmeldung verfassen (E-Mail, Brief, Chat, Umfrage), in gemeinsamen Dokumenten Quellen sammeln und nach Kriterien ordnen",
         gesellschaft:"Techn. & dig. Transformation: Rechercheleitfaden, Recherchefunktionen (inkl. KI), Quellenarchive, Quellendokumentation",
         digital:["Recherchefunktionen (inkl. KI)", "Quellenarchive nutzen", "Quellendokumentation", "Gemeinsame Dokumente für Quellensammlung"],
-        tools:["Copilot – KI-Recherche","swissdox – Zeitungsartikel suchen","E-Thek – E-Books/Zeitschriften","Statista – Statistiken finden"]
+        tools:["Copilot – KI-Recherche","swissdox – Zeitungsartikel suchen","E-Thek – E-Books/Zeitschriften","Statista – Statistiken finden"],
+        vorb:["to-teach.ai – Rechercheaufträge generieren","Copilot – Recherche-Beispiele"],
+        org:["Teams – Gemeinsame Quellensammlung","Padlet – Quellenpinnwand"],
+        digcomp:["Informations- und Datenkompetenz","Kritisches Denken und Ethik"]
       },
       {
         nr:"4.2.2", titel:"Social Media verantwortungsvoll nutzen, KI-Inhalte erkennen",
         sprachmodus:"I&K mündlich: Gespräche führen, Rückmeldungen differenzieren, Rollen übernehmen, Gruppenentscheidungen, argumentieren, Probleme lösen",
         gesellschaft:"Kultur: Kulturelle/soziale Hintergründe in Social Media; Kriterien für künstlich erzeugte/verfremdete Inhalte",
         digital:["Künstlich erzeugte Inhalte erkennen", "Kriterien für verfremdete Inhalte anwenden", "Fallbeispiele aus Social Media analysieren"],
-        tools:["Copilot – Inhalte prüfen lassen"]
+        tools:["Copilot – Inhalte prüfen lassen"],
+        vorb:["Copilot – Fallbeispiele generieren","fobizz – Deepfake-Szenarien vorbereiten"],
+        org:["Padlet – Fallbeispiele sammeln","Mentimeter – Einschätzungen abfragen"],
+        digcomp:["Kritisches Denken und Ethik","Informations- und Datenkompetenz"]
       }
     ]
   },
@@ -429,28 +527,40 @@ const DATA = [
         nr:"5.1.1", titel:"Politische Beiträge verstehen und einordnen",
         sprachmodus:"Rezeption mündlich: Absichten erkennen, politische Aussagen verstehen, Diskussionen folgen, Werte hinter Positionen erkennen",
         gesellschaft:"Ökologie: Modelle Klimawandel, ökologischer Fussabdruck",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Clipchamp – Audio-Clips vorbereiten","Statista – Klimadaten recherchieren"],
+        org:["Mentimeter – Meinungsbild"],
+        digcomp:[]
       },
       {
         nr:"5.1.2", titel:"Eigene Standpunkte entwickeln und vertreten",
         sprachmodus:"Produktion multimedial: Content erstellen (z.B. Social-Media), Argumente mit Hilfe eines KI-Assistenten aufbauen",
         gesellschaft:"Politik: Abstimmungsunterlagen, Medienbeiträge",
         digital:["Social-Media-Content erstellen", "KI-Assistent für Argumentaufbau"],
-        tools:["Canva – Social-Media-Post erstellen","Copilot – Argumente prüfen/entwickeln"]
+        tools:["Canva – Social-Media-Post erstellen","Copilot – Argumente prüfen/entwickeln"],
+        vorb:["Copilot – Argumentationsbeispiele","Canva – Vorlagen für Posts"],
+        org:["Padlet – Standpunkte sammeln"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration"]
       },
       {
         nr:"5.2.1", titel:"Politisches System der Schweiz darstellen",
         sprachmodus:"Produktion multimedial: Content erstellen (z.B. Social-Media), politische Inhalte aufbereiten",
         gesellschaft:"Politik: (Halb)direkte Demokratie, Föderalismus",
         digital:["Social-Media-Content erstellen", "Politische Inhalte multimedial aufbereiten"],
-        tools:["Canva – Infografik erstellen","learningapps – Quiz lösen"]
+        tools:["Canva – Infografik erstellen","learningapps – Quiz lösen"],
+        vorb:["simpleshow – Erklärvideo pol. System","learningapps – Quiz erstellen"],
+        org:["learningapps – Quiz bereitstellen","OpenOlat – Lernpfad"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration"]
       },
       {
         nr:"5.2.2", titel:"Mitwirkungsprojekt gestalten",
         sprachmodus:"Produktion multimedial: Mit Video- oder Bildgenerator ein kommunales Mitwirkungsprojekt (Video, Podcast, digitales Poster) mit Info und Handlungsaufruf produzieren",
         gesellschaft:"Politik: Gemeindeorganisation",
         digital:["Video-/Bildgenerator nutzen", "Video, Podcast oder digitales Poster produzieren", "Handlungsaufruf gestalten"],
-        tools:["Clipchamp – Video schneiden","Canva – Poster/Flyer gestalten","Podcastanlage – Podcast aufnehmen","Copilot – Texte für Handlungsaufruf"]
+        tools:["Clipchamp – Video schneiden","Canva – Poster/Flyer gestalten","Podcastanlage – Podcast aufnehmen","Copilot – Texte für Handlungsaufruf"],
+        vorb:["Copilot – Projektbriefing erstellen","Canva – Poster-Vorlage"],
+        org:["Teams – Projektgruppen organisieren","Padlet – Zwischenergebnisse sammeln"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration","Problemlösung und Selbststeuerung"]
       }
     ]
   },
@@ -465,26 +575,38 @@ const DATA = [
         sprachmodus:"Produktion schriftlich/bildlich: Text/Bild/Präsentation mit KI-Chat erstellen/überarbeiten, strukturierte Nachricht mit Begründung, Stories mit Bildern, Umfrage ausarbeiten",
         gesellschaft:"Recht: Grundwissen Vertragsrecht",
         digital:["KI-Chat zum Erstellen/Überarbeiten von Texten", "Stories mit Bildern erstellen", "Promptvorlagen für KI-Nutzung"],
-        tools:["Copilot – Vertragstexte analysieren lassen","Canva – Info-Post/Story erstellen"]
+        tools:["Copilot – Vertragstexte analysieren lassen","Canva – Info-Post/Story erstellen"],
+        vorb:["fobizz – KI-Lernraum Vertragsanalyse","Copilot – Vertragsbeispiele generieren"],
+        org:["fobizz – Lernraum freischalten","Padlet – Vertragsbeispiele sammeln"],
+        digcomp:["Digitale Produktion","Kritisches Denken und Ethik"]
       },
       {
         nr:"6.1.2", titel:"Rechtliche Abklärung / Unterstützung finden",
         sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
         gesellschaft:"Recht: Grundwissen Vertragsrecht",
         digital:["Webseiten von Fachstellen", "KI-basierte Analysen"],
-        tools:["Copilot – Fachbegriffe klären","Word – Beschwerdeschreiben verfassen"]
+        tools:["Copilot – Fachbegriffe klären","Word – Beschwerdeschreiben verfassen"],
+        vorb:["Copilot – Muster-Beschwerdebriefe"],
+        org:["OpenOlat – Links zu Fachstellen"],
+        digcomp:["Informations- und Datenkompetenz"]
       },
       {
         nr:"6.2.1", titel:"Ethische vs. rechtliche Regelungen unterscheiden",
         sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
         gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Copilot – Dilemma-Szenarien erstellen"],
+        org:["Mentimeter – Abstimmung"],
+        digcomp:[]
       },
       {
         nr:"6.2.2", titel:"Moralische Konflikte lösen",
         sprachmodus:"Produktion mündlich: Aussagen und Argumente strukturieren, Redemittel nutzen",
         gesellschaft:"Ethik: Moralische Prinzipien",
-        digital:[],tools:[]
+        digital:[],tools:[],
+        vorb:["Copilot – Rollenspiel-Szenarien"],
+        org:["Padlet – Gruppenarbeit"],
+        digcomp:[]
       }
     ]
   },
@@ -499,28 +621,40 @@ const DATA = [
         sprachmodus:"Rezeption schriftlich/bildlich: Absicht von Texten erkennen (digital/analog), Grafiken/Umfragen interpretieren",
         gesellschaft:"Identität & Sozialisation: Persönlichkeitsentwicklung, Weiterbildung, Zukunftschancen",
         digital:["Digitale Texte lesen und interpretieren", "Grafiken/Umfragen digital interpretieren"],
-        tools:["Copilot – Weiterbildungsinfos recherchieren","Statista – Arbeitsmarktdaten"]
+        tools:["Copilot – Weiterbildungsinfos recherchieren","Statista – Arbeitsmarktdaten"],
+        vorb:["Statista – Arbeitsmarkt-Statistiken","Forms – Selbsteinschätzung erstellen"],
+        org:["Forms – Selbsteinschätzung durchführen","OneNote – Reflexionsjournal"],
+        digcomp:["Informations- und Datenkompetenz","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"7.1.2", titel:"Berufliche Laufbahn planen / Bewerbung",
         sprachmodus:"I&K mündlich: Zielgerichtete Gespräche, Lösungen entwickeln, Rückmeldungen, Gesprächsrollen, Diskussion moderieren",
         gesellschaft:"Wirtschaft: Verschiedene wirtschaftliche Situationen",
         digital:["Digitale Tools und KI-Unterstützung für Information und Aufbereitung"],
-        tools:["Word – Lebenslauf/Bewerbung schreiben","Copilot – Bewerbungsbrief überarbeiten","Canva – Lebenslauf gestalten"]
+        tools:["Word – Lebenslauf/Bewerbung schreiben","Copilot – Bewerbungsbrief überarbeiten","Canva – Lebenslauf gestalten"],
+        vorb:["to-teach.ai – Bewerbungs-Übungen","Copilot – Muster-CVs generieren"],
+        org:["Teams – Bewerbungsgespräch-Simulation"],
+        digcomp:["Digitale Produktion","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"7.2.1", titel:"Pflichten gegenüber Staat/Gesellschaft",
         sprachmodus:"I&K schriftlich: Mehrmalige schriftliche Kommunikation (Dialog asynchron), Bezug erläutern, schriftliche Rückmeldung",
         gesellschaft:"Politik: Politische Pflichten und Rechte",
         digital:["Asynchrone schriftliche Kommunikation"],
-        tools:["Word – Formelles Schreiben","Copilot – Fachbegriffe klären"]
+        tools:["Word – Formelles Schreiben","Copilot – Fachbegriffe klären"],
+        vorb:["Copilot – Muster-Formulare erstellen"],
+        org:["OpenOlat – Lernpfad Steuern/Behörden"],
+        digcomp:["Kommunikation und Kollaboration"]
       },
       {
         nr:"7.2.2", titel:"Unterlagen für Behörden zusammenstellen",
         sprachmodus:"I&K schriftlich: Schriftlicher Austausch mit Behörden, Dialog asynchron, Bezug erläutern",
         gesellschaft:"Wirtschaft: Anspruchsgruppen und Zielkonflikte",
         digital:["Digitale oder analoge Einreichwege nutzen", "Digitale Formulare ausfüllen"],
-        tools:["Word – Formulare ausfüllen","OneNote – Dokumente ablegen"]
+        tools:["Word – Formulare ausfüllen","OneNote – Dokumente ablegen"],
+        vorb:["Word – Formularvorlagen"],
+        org:["Teams – Dateien einsammeln"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration"]
       }
     ]
   },
@@ -535,28 +669,40 @@ const DATA = [
         sprachmodus:"Rezeption audiovisuell: Bildsprache/Tonalität deuten, Nonverbalität interpretieren, audiovisuelle Medienformate unterscheiden",
         gesellschaft:"Kultur: Ausdrucksformen von Kunst",
         digital:["Audiovisuelle Medienformate unterscheiden"],
-        tools:["VR-Brillen – Virtuelle Museumsbesuche"]
+        tools:["VR-Brillen – Virtuelle Museumsbesuche"],
+        vorb:["Clipchamp – Video-Beispiele vorbereiten"],
+        org:["Padlet – Beispiele sammeln"],
+        digcomp:["Informations- und Datenkompetenz","Kritisches Denken und Ethik"]
       },
       {
         nr:"8.1.2", titel:"Kulturelle Phänomene reflektieren",
         sprachmodus:"Rezeption mündlich: Beitrag im Podcast/Rollenspiel, publikumsgerecht präsentieren",
         gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
         digital:["Podcast/Rollenspiel"],
-        tools:["Podcastanlage – Podcast aufnehmen"]
+        tools:["Podcastanlage – Podcast aufnehmen"],
+        vorb:["Clipchamp – Podcast-Beispiele schneiden"],
+        org:["Mentimeter – Meinungsbilder","Podcastanlage – bereitstellen"],
+        digcomp:["Digitale Produktion","Kommunikation und Kollaboration"]
       },
       {
         nr:"8.2.1", titel:"Kreative Ausdrucksformen nutzen",
         sprachmodus:"Produktion multimedial: Neue audiovisuelle Programme recherchieren und damit Storys erstellen",
         gesellschaft:"Kultur: Kultur als Ausdrucksmittel",
         digital:["Neue audiovisuelle Programme recherchieren", "Storys damit erstellen"],
-        tools:["Clipchamp – Video schneiden","Canva – Storys gestalten","Copilot – Texte/Ideen entwickeln"]
+        tools:["Clipchamp – Video schneiden","Canva – Storys gestalten","Copilot – Texte/Ideen entwickeln"],
+        vorb:["Canva – Vorlagen erstellen","Synthesia – KI-Video erstellen"],
+        org:["Padlet – Zwischenergebnisse","Teams – Projektgruppen"],
+        digcomp:["Digitale Produktion","Problemlösung und Selbststeuerung"]
       },
       {
         nr:"8.2.2", titel:"Lesarten eines Kunstwerks diskutieren",
         sprachmodus:"Produktion multimedial: Neue audiovisuelle Programme recherchieren und damit Storys erstellen",
         gesellschaft:"Ethik: Perspektivenübernahme, ethische Grundsätze",
         digital:["Audiovisuelle Programme für Storys nutzen"],
-        tools:["Canva – Visuelle Interpretation erstellen","Padlet – Lesart posten"]
+        tools:["Canva – Visuelle Interpretation erstellen","Padlet – Lesart posten"],
+        vorb:["Copilot – Interpretationshilfen erstellen"],
+        org:["Padlet – Verschiedene Lesarten sammeln","Mentimeter – Abstimmung"],
+        digcomp:["Digitale Produktion","Kritisches Denken und Ethik"]
       }
     ]
   }
@@ -573,12 +719,16 @@ function showView(id) {
   event.target.classList.add('active');
 }
 
+function listHtml(arr, emptyText) {
+  if (!arr || !arr.length) return `<li class="empty">${emptyText||'–'}</li>`;
+  return arr.map(a => `<li>${a}</li>`).join('');
+}
+
 function render() {
   const c = document.getElementById('themesContainer');
   c.innerHTML = '';
   DATA.forEach(t => {
     const vis = activeThemes.has('all') || activeThemes.has(String(t.id));
-    const hasDigital = t.lernziele.some(lz => lz.digital.length > 0);
 
     const card = document.createElement('div');
     card.className = 'theme-card' + (vis ? ' open' : ' hidden');
@@ -598,20 +748,57 @@ function render() {
           ${t.kompetenzen.map(k => `<span class="chip-sm chip-k">${k}</span>`).join('')}
         </div>
 
-        <div class="sec-title">Lernziele – digitale Aspekte</div>
-        ${t.lernziele.map(lz => `
+        <div class="sec-title">Lernziele – digitale Aspekte &amp; Tools</div>
+        ${t.lernziele.map(lz => {
+          const hasDigi = lz.digital && lz.digital.length > 0;
+          const hasVorb = lz.vorb && lz.vorb.length > 0;
+          const hasOrg = lz.org && lz.org.length > 0;
+          const hasLP = hasVorb || hasOrg;
+
+          let digiSection = '';
+          if (hasDigi) {
+            digiSection = `
+            <div class="digi-box">
+              <h5>Digitale Aktivitäten (gemäss SLP)</h5>
+              <ul>${lz.digital.map(d => '<li>'+d+'</li>').join('')}</ul>
+            </div>
+            <div class="tools-grid">
+              <div class="tool-col col-lern">
+                <h6>&#9998; Lernende – BBW-Tools</h6>
+                <ul>${listHtml(lz.tools,'–')}</ul>
+              </div>
+              <div class="tool-col col-lp">
+                <h6>&#128100; Lehrperson</h6>
+                <div class="lp-sub">Vorbereitung</div>
+                <ul>${listHtml(lz.vorb,'–')}</ul>
+                <div class="lp-sub" style="margin-top:4px;">Organisation</div>
+                <ul>${listHtml(lz.org,'–')}</ul>
+              </div>
+              <div class="tool-col col-dc">
+                <h6>&#9670; DigComp-Bezug</h6>
+                <ul>${listHtml(lz.digcomp,'–')}</ul>
+              </div>
+            </div>`;
+          } else if (hasLP) {
+            digiSection = `
+            <div style="font-size:.78rem;color:var(--muted);margin-top:4px;font-style:italic;">Kein expliziter digitaler Bezug im SLP</div>
+            <div class="lp-only-box">
+              <h6>&#128100; Lehrperson – digitale Unterstützung</h6>
+              ${hasVorb ? '<div class="lp-sub">Vorbereitung</div><ul>'+lz.vorb.map(v=>'<li>'+v+'</li>').join('')+'</ul>' : ''}
+              ${hasOrg ? '<div class="lp-sub"'+(hasVorb?' style="margin-top:4px;"':'')+'>Organisation</div><ul>'+lz.org.map(o=>'<li>'+o+'</li>').join('')+'</ul>' : ''}
+            </div>`;
+          } else {
+            digiSection = '<div style="font-size:.78rem;color:var(--muted);margin-top:4px;font-style:italic;">Kein expliziter digitaler Bezug im SLP</div>';
+          }
+
+          return `
           <div class="lz-row" style="border-left-color:${TC[t.id]}">
             <h4>${lz.nr} ${lz.titel}</h4>
             <div class="gesellschaft"><strong>Gesellschaft:</strong> ${lz.gesellschaft}</div>
             <div class="sprachmodus"><strong>Sprachmodus:</strong> ${lz.sprachmodus}</div>
-            ${lz.digital.length > 0 ? `
-            <div class="digi-box">
-              <h5>Digitale Aktivitäten (gemäss SLP)</h5>
-              <ul>${lz.digital.map(d => `<li>${d}</li>`).join('')}</ul>
-            </div>
-            ${(lz.tools&&lz.tools.length) ? `<div class="tools-box"><h5>BBW-Tools für Lernende</h5><ul>${lz.tools.map(t => `<li>${t}</li>`).join('')}</ul></div>` : ''}` : '<div style="font-size:.78rem;color:var(--muted);margin-top:4px;font-style:italic;">Kein expliziter digitaler Bezug im SLP</div>'}
-          </div>
-        `).join('')}
+            ${digiSection}
+          </div>`;
+        }).join('')}
       </div>
     `;
     c.appendChild(card);
